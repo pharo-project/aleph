@@ -91,3 +91,14 @@ AlpManager >> rebuildAll [
 	self navigation allMethodsDo: [ :eachMethod |
 		indexes do: [ :eachIndex | eachIndex indexMethod: eachMethod ] ]
 ]
+
+{ #category : #initialization }
+AlpManager >> subscribeToSystemAnnouncer [
+
+		ClassAdded-> #behaviorAdded:.
+		ClassRemoved->#behaviorRemoved:.
+		MethodAdded -> #methodAdded:.
+		MethodRemoved -> #methodRemoved:.
+		MethodModified -> #methodModified:.
+	
+]

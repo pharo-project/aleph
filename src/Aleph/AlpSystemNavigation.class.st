@@ -13,21 +13,32 @@ AlpSystemNavigation class >> isActive [
 { #category : #query }
 AlpSystemNavigation >> allImplementorsOf: aLiteral [
 
-	^ self manager findImplementorsOf: aLiteral
+	^ self applyScope: (self manager findImplementorsOf: aLiteral)
 ]
 
 { #category : #query }
 AlpSystemNavigation >> allReferencesTo: aLiteral [
 
-	^ aLiteral first isUppercase 
+	^ self applyScope: (aLiteral first isUppercase 
 		ifTrue:[ self manager findReferencesTo: aLiteral ]
-		ifFalse: [  self manager findSendersOf: aLiteral ]
+		ifFalse: [  self manager findSendersOf: aLiteral ])
 ]
 
 { #category : #query }
 AlpSystemNavigation >> allSendersOf: aLiteral [
 
-	^ self manager findSendersOf: aLiteral
+	^ self applyScope: (self manager findSendersOf: aLiteral)
+]
+
+{ #category : #'as yet unclassified' }
+AlpSystemNavigation >> applyScope: aCollection [
+
+	(environment notNil 
+		and: [ environment isDictionary not ])
+		ifTrue: [ 
+			^ aCollection select: [ :each | environment hasClassNamed: each origin name  ] ].
+
+	^ aCollection
 ]
 
 { #category : #'as yet unclassified' }
