@@ -13,10 +13,11 @@ AlpSendersIndex >> buildIndex [
 
 { #category : #building }
 AlpSendersIndex >> indexMethod: aMethod [
-	| literalCollector |
 
-	literalCollector := AlpLiteralCollector new.
-	aMethod ast acceptVisitor: literalCollector.
-	literalCollector literals 
-		do: [ :each | (self indexAt: each) add: aMethod ]
+	aMethod literals do: [ :each |
+		each isSymbol ifTrue: [ (self indexAt: each) add: aMethod ] ].
+	aMethod specialLiterals do: [ :each |
+		(self indexAt: each) add: aMethod ].
+	aMethod pragmas do: [ :each |
+		(self indexAt: each selector) add: aMethod ]
 ]

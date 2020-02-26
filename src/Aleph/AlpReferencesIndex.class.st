@@ -13,10 +13,8 @@ AlpReferencesIndex >> buildIndex [
 
 { #category : #building }
 AlpReferencesIndex >> indexMethod: aMethod [
-	| collector |
 
-	collector := AlpGlobalCollector new.
-	aMethod ast acceptVisitor: collector.
-	collector globals
-		do: [ :each | (self indexAt: each) add: aMethod ]	
+	aMethod literals 
+		select: [ :each | each isVariableBinding ]
+		thenDo: [ :each | (self indexAt: each key) add: aMethod ]
 ]
