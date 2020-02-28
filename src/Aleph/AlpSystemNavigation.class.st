@@ -35,7 +35,7 @@ AlpSystemNavigation >> applyScope: aCollection [
 	^ aCollection
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 AlpSystemNavigation >> manager [
 
 	^ AlpManager default
