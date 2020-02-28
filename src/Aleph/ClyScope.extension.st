@@ -16,6 +16,6 @@ ClyScope >> asSystemNavigation [
 
 { #category : #'*Aleph' }
 ClyScope >> hasClassNamed: aString [ 
-	
+
 	^ self allBehaviors anySatisfy: [ :each | each name = aString ]
 ]
