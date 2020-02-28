@@ -10,12 +10,13 @@ SystemNavigation >> allMethodsDo: aBlock [
 { #category : #'*Aleph' }
 SystemNavigation class >> default [
 
-	AlpSystemNavigation isActive ifTrue: [ ^ AlpSystemNavigation basicNew initialize ].
-	^ self basicNew initialize
+	^ self new
 ]
 
 { #category : #'*Aleph' }
-SystemNavigation class >> new [ 
+SystemNavigation class >> new [
 
-	^ self default
+	AlpManager isActive ifTrue: [ 
+		^ AlpSystemNavigation basicNew initialize ].
+	^ self basicNew initialize
 ]

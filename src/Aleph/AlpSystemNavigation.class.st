@@ -4,12 +4,6 @@ Class {
 	#category : #Aleph
 }
 
-{ #category : #testing }
-AlpSystemNavigation class >> isActive [
-
-	^ AlpManager isActive
-]
-
 { #category : #query }
 AlpSystemNavigation >> allImplementorsOf: aLiteral [
 
@@ -19,9 +13,9 @@ AlpSystemNavigation >> allImplementorsOf: aLiteral [
 { #category : #query }
 AlpSystemNavigation >> allReferencesTo: aLiteral [
 
-	^ self applyScope: (aLiteral first isUppercase 
-		ifTrue:[ self manager findReferencesTo: aLiteral ]
-		ifFalse: [  self manager findSendersOf: aLiteral ])
+	^ self applyScope: (aLiteral isVariableBinding
+		ifTrue:[ self manager findReferencesTo: aLiteral key ]
+		ifFalse: [ self manager findSendersOf: aLiteral ])
 ]
 
 { #category : #query }
@@ -30,7 +24,7 @@ AlpSystemNavigation >> allSendersOf: aLiteral [
 	^ self applyScope: (self manager findSendersOf: aLiteral)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 AlpSystemNavigation >> applyScope: aCollection [
 
 	(environment notNil 
