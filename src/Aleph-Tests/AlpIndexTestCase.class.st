@@ -16,13 +16,13 @@ AlpIndexTestCase class >> isAbstract [
 { #category : #templates }
 AlpIndexTestCase >> compiledMethod1 [
 	
-	^ AptMockOriginal >> #method1
+	^ AlpMockOriginal >> #method1
 ]
 
 { #category : #templates }
 AlpIndexTestCase >> compiledMethod1Modified [
 	
-	^ AptMockModified >> #method1
+	^ AlpMockModified >> #method1
 ]
 
 { #category : #accessing }

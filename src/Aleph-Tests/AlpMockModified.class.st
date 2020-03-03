@@ -1,11 +1,11 @@
 Class {
-	#name : #AptMockModified,
+	#name : #AlpMockModified,
 	#superclass : #Object,
 	#category : #'Aleph-Tests'
 }
 
 { #category : #templates }
-AptMockModified >> method1 [
+AlpMockModified >> method1 [
 	<aPragma>
 
 	^ self className, 
