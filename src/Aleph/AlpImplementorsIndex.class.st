@@ -16,3 +16,14 @@ AlpImplementorsIndex >> indexMethod: aMethod [
 
 	(self indexAt: aMethod selector) add: aMethod
 ]
+
+{ #category : #'as yet unclassified' }
+AlpImplementorsIndex >> methodRemoved: aMethod [
+	| set |
+
+	set := self indexAt: aMethod selector.
+	set remove: aMethod.
+	set ifEmpty: [ 
+		table removeKey: aMethod selector ]
+	
+]

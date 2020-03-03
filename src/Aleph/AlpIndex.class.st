@@ -18,7 +18,7 @@ AlpIndex >> indexAt: aSymbol [
 
 	^ table 
 		at: aSymbol
-		ifAbsentPut: [ WeakSet new ]
+		ifAbsentPut: [ Set new ]
 ]
 
 { #category : #initialization }
@@ -26,6 +26,17 @@ AlpIndex >> initialize [
 
 	super initialize.
 	table := IdentityDictionary new: self startSize
+]
+
+{ #category : #updating }
+AlpIndex >> methodAdded: aMethod [
+
+	self indexMethod: aMethod
+]
+
+{ #category : #'as yet unclassified' }
+AlpIndex >> methodModifiedFrom: oldMethod to: newMethod [
+	"Do nothing. Modify a method does not change implementor name"
 ]
 
 { #category : #accessing }
