@@ -22,12 +22,9 @@ AlpImplementorsIndexTest >> testIndexMethod [
 
 { #category : #tests }
 AlpImplementorsIndexTest >> testMethodAdded [
+	"Self as indexMethod"
 
-	self index methodAdded: self compiledMethod1.
-	
-	self 
-		assert: (self index referencesTo: #method1) size
-		equals: 1
+	self testIndexMethod
 ]
 
 { #category : #tests }

@@ -13,7 +13,7 @@ AlpSendersIndexTest >> indexClass [
 { #category : #tests }
 AlpSendersIndexTest >> testIndexMethod [
 	
-	self index indexMethod: AlpIndexTestCase >> #method1.
+	self index indexMethod: self compiledMethod1.
 	
 	self assert: (self index referencesTo: #className) size equals: 1.
 	self assert: (self index referencesTo: #name) size equals: 1.
@@ -24,4 +24,11 @@ AlpSendersIndexTest >> testIndexMethod [
 	
 	self assert: (self index referencesTo: #doesNotExit) isEmpty
 
+]
+
+{ #category : #tests }
+AlpSendersIndexTest >> testMethodAdded [
+	"Same as index method"
+
+	self testIndexMethod
 ]
