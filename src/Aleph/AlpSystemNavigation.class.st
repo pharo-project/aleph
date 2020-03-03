@@ -38,5 +38,5 @@ AlpSystemNavigation >> applyScope: aCollection [
 { #category : #private }
 AlpSystemNavigation >> manager [
 
-	^ AlpManager default
+	^ AlpIndexManager current
 ]

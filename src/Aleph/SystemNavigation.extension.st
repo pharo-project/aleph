@@ -16,7 +16,7 @@ SystemNavigation class >> default [
 { #category : #'*Aleph' }
 SystemNavigation class >> new [
 
-	AlpManager isActive ifTrue: [ 
+	AlpIndexManager isActive ifTrue: [ 
 		^ AlpSystemNavigation basicNew initialize ].
 	^ self basicNew initialize
 ]

@@ -1,5 +1,14 @@
+"
+I am an index manager, charged with the task of concentrate all system indexes and accessors to it. 
+The find* methods provide access to the contained indexes.
+The manager subscribes to SystemAnnouncer to listen system changes (method addition, modification and removals), in order to keep the indexes up-to date.
+
+We use a special task it runner in low priority to update the indexes in background, when the system is idle.
+
+The method rebuildAll will discard all previously existing indexes and re-build all from scratch. 
+"
 Class {
-	#name : #AlpManager,
+	#name : #AlpIndexManager,
 	#superclass : #Object,
 	#instVars : [
 		'indexes',
@@ -7,31 +16,31 @@ Class {
 	],
 	#classVars : [
 		'Active',
-		'Default'
+		'Current'
 	],
 	#category : #Aleph
 }
 
 { #category : #accessing }
-AlpManager class >> activate [
+AlpIndexManager class >> activate [
 
 	Active := true
 ]
 
+{ #category : #'instance creation' }
+AlpIndexManager class >> current [
+
+	^ Current ifNil: [ Current := self new ]
+]
+
 { #category : #accessing }
-AlpManager class >> deactivate [
+AlpIndexManager class >> deactivate [
 
 	Active := false
 ]
 
-{ #category : #accessing }
-AlpManager class >> default [
-
-	^ Default ifNil: [ Default := self new ]
-]
-
 { #category : #testing }
-AlpManager class >> isActive [
+AlpIndexManager class >> isActive [
 
 	^ Active ifNil: [ 
 		self deactivate.
@@ -39,43 +48,43 @@ AlpManager class >> isActive [
 ]
 
 { #category : #query }
-AlpManager >> findImplementorsOf: aLiteral [
+AlpIndexManager >> findImplementorsOf: aLiteral [
 
 	^ (self indexAt: AlpImplementorsIndex) referencesTo: aLiteral
 ]
 
 { #category : #query }
-AlpManager >> findReferencesTo: aLiteral [
+AlpIndexManager >> findReferencesTo: aLiteral [
 
 	^ (self indexAt: AlpReferencesIndex) referencesTo: aLiteral
 ]
 
 { #category : #query }
-AlpManager >> findSendersOf: aLiteral [
+AlpIndexManager >> findSendersOf: aLiteral [
 
 	^ (self indexAt: AlpSendersIndex) referencesTo: aLiteral
 ]
 
 { #category : #private }
-AlpManager >> indexAt: aClass [
+AlpIndexManager >> indexAt: aClass [
 
 	^ indexes detect: [ :each | each class = aClass ]
 ]
 
 { #category : #accessing }
-AlpManager >> navigation [
+AlpIndexManager >> navigation [
 
 	^ navigation ifNil: [ SystemNavigation default ]
 ]
 
 { #category : #accessing }
-AlpManager >> navigation: aNavigation [
+AlpIndexManager >> navigation: aNavigation [
 
 	navigation := aNavigation
 ]
 
 { #category : #initialization }
-AlpManager >> newDefaultIndexes [
+AlpIndexManager >> newDefaultIndexes [
 
 	^ { 
 	AlpImplementorsIndex new.
@@ -85,7 +94,7 @@ AlpManager >> newDefaultIndexes [
 ]
 
 { #category : #updating }
-AlpManager >> rebuildAll [
+AlpIndexManager >> rebuildAll [
 
 	indexes := self newDefaultIndexes.
 	self navigation allMethodsDo: [ :eachMethod |
@@ -93,7 +102,7 @@ AlpManager >> rebuildAll [
 ]
 
 { #category : #initialization }
-AlpManager >> subscribeToSystemAnnouncer [
+AlpIndexManager >> subscribeToSystemAnnouncer [
 
 		ClassAdded-> #behaviorAdded:.
 		ClassRemoved->#behaviorRemoved:.
