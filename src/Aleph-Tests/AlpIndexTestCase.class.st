@@ -16,13 +16,13 @@ AlpIndexTestCase class >> isAbstract [
 { #category : #templates }
 AlpIndexTestCase >> compiledMethod1 [
 	
-	^ AlpIndexTestCase >> #method1
+	^ AptMockOriginal >> #method1
 ]
 
 { #category : #templates }
 AlpIndexTestCase >> compiledMethod1Modified [
 	
-	^ (AlpIndexTestCase >> #method1) copyWithSource: (AlpIndexTestCase >> #method1Modified) sourceCode
+	^ AptMockModified >> #method1
 ]
 
 { #category : #accessing }
@@ -35,26 +35,6 @@ AlpIndexTestCase >> index [
 AlpIndexTestCase >> indexClass [
 
 	^ self subclassResponsibility
-]
-
-{ #category : #templates }
-AlpIndexTestCase >> method1 [
-	<aPragma>
-	<otherPragma: 42>
-
-	^ self className, 
-		(1 + 1) printString, 
-		Object name
-]
-
-{ #category : #templates }
-AlpIndexTestCase >> method1Modified [
-	<aPragma>
-	<otherPragma: 42>
-
-	^ self className, 
-		(1 - 1) printString, 
-		ProtoObject name
 ]
 
 { #category : #running }

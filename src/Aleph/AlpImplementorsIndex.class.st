@@ -17,13 +17,21 @@ AlpImplementorsIndex >> indexMethod: aMethod [
 	(self indexAt: aMethod selector) add: aMethod
 ]
 
+{ #category : #updating }
+AlpImplementorsIndex >> methodAdded: aMethod [
+
+	self indexMethod: aMethod
+]
+
+{ #category : #updating }
+AlpImplementorsIndex >> methodModifiedFrom: oldMethod to: newMethod [
+	"Do nothing. Modify a method does not change implementor name"
+]
+
 { #category : #'as yet unclassified' }
 AlpImplementorsIndex >> methodRemoved: aMethod [
-	| set |
-
-	set := self indexAt: aMethod selector.
-	set remove: aMethod.
-	set ifEmpty: [ 
-		table removeKey: aMethod selector ]
 	
+	self 
+		remove: aMethod 
+		fromEntry: aMethod selector
 ]

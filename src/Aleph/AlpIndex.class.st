@@ -31,12 +31,21 @@ AlpIndex >> initialize [
 { #category : #updating }
 AlpIndex >> methodAdded: aMethod [
 
-	self indexMethod: aMethod
+	self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
-AlpIndex >> methodModifiedFrom: oldMethod to: newMethod [
-	"Do nothing. Modify a method does not change implementor name"
+{ #category : #updating }
+AlpIndex >> methodModifiedFrom: oldMethod to: newMethod [ 
+
+	self methodRemoved: oldMethod.
+	self methodAdded: newMethod
+	
+]
+
+{ #category : #updating }
+AlpIndex >> methodRemoved: aMethod [
+
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -52,6 +61,16 @@ AlpIndex >> referencesTo: aSymbol [
 		at: aSymbol 
 		ifAbsent: [ #() ])
 		asArray
+]
+
+{ #category : #private }
+AlpIndex >> remove: aMethod fromEntry: aSymbol [
+	| set |
+
+	set := self indexAt: aSymbol.
+	set remove: aMethod.
+	set ifEmpty: [ 
+		table removeKey: aSymbol ]
 ]
 
 { #category : #initialization }

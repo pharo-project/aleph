@@ -14,10 +14,31 @@ AlpSendersIndex >> buildIndex [
 { #category : #building }
 AlpSendersIndex >> indexMethod: aMethod [
 
+	self 
+		sendersOf: aMethod 
+		do: [ :aSelector | (self indexAt: aSelector) add: aMethod ]
+]
+
+{ #category : #updating }
+AlpSendersIndex >> methodAdded: aMethod [
+
+	self indexMethod: aMethod
+]
+
+{ #category : #updating }
+AlpSendersIndex >> methodRemoved: aMethod [
+
+	self sendersOf: aMethod do: [ :aSelector | 
+		self remove: aMethod fromEntry: aSelector ]
+]
+
+{ #category : #private }
+AlpSendersIndex >> sendersOf: aMethod do: aBlock [
+
 	aMethod literals do: [ :each |
-		each isSymbol ifTrue: [ (self indexAt: each) add: aMethod ] ].
+		each isSymbol ifTrue: [ aBlock value: each ] ].
 	aMethod specialLiterals do: [ :each |
-		(self indexAt: each) add: aMethod ].
+		aBlock value: each ].
 	aMethod pragmas do: [ :each |
-		(self indexAt: each selector) add: aMethod ]
+		aBlock value: each selector ]
 ]
