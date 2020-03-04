@@ -99,6 +99,13 @@ AlpIndexManager >> doMethodRemoved: aMethod [
 	self withTaskDo: [ :each | each methodRemoved: aMethod ]
 ]
 
+{ #category : #private }
+AlpIndexManager >> ensureWorkerRunning [
+
+	runner isRunning ifTrue: [ ^ self ].
+	runner start
+]
+
 { #category : #query }
 AlpIndexManager >> findImplementorsOf: aLiteral [
 
@@ -225,5 +232,6 @@ AlpIndexManager >> unsubscribeFromSystemAnnouncer [
 { #category : #private }
 AlpIndexManager >> withTaskDo: aBlock [
 
+	self ensureWorkerRunning.
 	runner schedule: [ indexes do: aBlock ]
 ]
