@@ -68,9 +68,9 @@ AlpIndex >> remove: aMethod fromEntry: aSymbol [
 	| set |
 
 	set := self indexAt: aSymbol.
-	set remove: aMethod.
+	set remove: aMethod ifAbsent: [].
 	set ifEmpty: [ 
-		table removeKey: aSymbol ]
+		table removeKey: aSymbol ifAbsent: [] ]
 ]
 
 { #category : #initialization }
