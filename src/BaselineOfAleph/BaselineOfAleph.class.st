@@ -12,7 +12,7 @@ BaselineOfAleph >> baseline: spec [
 		self taskit: spec.
 		spec 
 			package: #'Aleph';
-			package: #'Aleph-Tests' ]	
+			package: #'Aleph-Tests' ]
 ]
 
 { #category : #'external projects' }

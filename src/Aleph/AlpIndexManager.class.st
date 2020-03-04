@@ -63,7 +63,7 @@ AlpIndexManager class >> reset [
 	<script>
 
 	Current ifNil: [ ^ self ].
-	Current unsubscribeFromSystemAnnouncer.
+	Current shutDown.
 	Current := nil
 ]
 
@@ -195,6 +195,13 @@ AlpIndexManager >> rebuildAll [
 	ensure: [ 
 		self subscribeToSystemAnnouncer.
 		self active: oldActive ]
+]
+
+{ #category : #'system startup' }
+AlpIndexManager >> shutDown [
+ 
+	self unsubscribeFromSystemAnnouncer.
+	runner stop
 ]
 
 { #category : #initialization }
