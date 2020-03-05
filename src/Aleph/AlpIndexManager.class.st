@@ -13,8 +13,8 @@ Class {
 	#instVars : [
 		'indexes',
 		'navigation',
-		'runner',
-		'active'
+		'active',
+		'worker'
 	],
 	#classVars : [
 		'Current'
@@ -43,7 +43,7 @@ AlpIndexManager class >> deactivate [
 { #category : #accessing }
 AlpIndexManager class >> indexPriority [
 
-	^ Processor systemBackgroundPriority
+	^ Processor userSchedulingPriority
 ]
 
 { #category : #accessing }
@@ -102,8 +102,8 @@ AlpIndexManager >> doMethodRemoved: aMethod [
 { #category : #private }
 AlpIndexManager >> ensureWorkerRunning [
 
-	runner isRunning ifTrue: [ ^ self ].
-	runner start
+	worker isRunning ifTrue: [ ^ self ].
+	worker start
 ]
 
 { #category : #query }
@@ -135,7 +135,7 @@ AlpIndexManager >> initialize [
 
 	super initialize.
 	self active: false.
-	runner := TKTWorker new
+	worker := TKTWorker new
 		name: self class indexWorkerName;
 		priority: self class indexPriority;
 		start.
@@ -208,7 +208,7 @@ AlpIndexManager >> rebuildAll [
 AlpIndexManager >> shutDown [
  
 	self unsubscribeFromSystemAnnouncer.
-	runner stop
+	worker stop
 ]
 
 { #category : #initialization }
@@ -233,5 +233,5 @@ AlpIndexManager >> unsubscribeFromSystemAnnouncer [
 AlpIndexManager >> withTaskDo: aBlock [
 
 	self ensureWorkerRunning.
-	runner schedule: [ indexes do: aBlock ]
+	worker schedule: [ indexes do: aBlock ]
 ]

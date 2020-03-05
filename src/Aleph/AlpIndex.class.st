@@ -18,7 +18,7 @@ AlpIndex >> indexAt: aSymbol [
 
 	^ table 
 		at: aSymbol
-		ifAbsentPut: [ Set new ]
+		ifAbsentPut: [ WeakSet new ]
 ]
 
 { #category : #initialization }
