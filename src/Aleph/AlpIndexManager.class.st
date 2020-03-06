@@ -163,8 +163,7 @@ AlpIndexManager >> methodModified: ann [
 { #category : #updating }
 AlpIndexManager >> methodRemoved: ann [ 
 
-	'Remove' crTrace.
-	ann methodRemoved crTrace
+	self doMethodRemoved: ann methodRemoved
 ]
 
 { #category : #accessing }
