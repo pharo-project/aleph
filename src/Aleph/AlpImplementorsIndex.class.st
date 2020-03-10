@@ -24,13 +24,8 @@ AlpImplementorsIndex >> methodAdded: aMethod [
 ]
 
 { #category : #updating }
-AlpImplementorsIndex >> methodModifiedFrom: oldMethod to: newMethod [
-	"Do nothing. Modify a method does not change implementor name"
-]
-
-{ #category : #'as yet unclassified' }
 AlpImplementorsIndex >> methodRemoved: aMethod [
-	
+
 	self 
 		remove: aMethod 
 		fromEntry: aMethod selector

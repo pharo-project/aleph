@@ -157,7 +157,9 @@ AlpIndexManager >> methodAdded: ann [
 { #category : #updating }
 AlpIndexManager >> methodModified: ann [ 
 
-	self doMethodModifiedFrom: ann oldMethod to: ann newMethod
+	self 
+		doMethodModifiedFrom: ann oldMethod 
+		to: ann newMethod
 ]
 
 { #category : #updating }
