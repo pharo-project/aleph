@@ -1,6 +1,6 @@
 Class {
 	#name : #AlpTrieIndex,
-	#superclass : #Object,
+	#superclass : #AlpIndex,
 	#instVars : [
 		'initialTable',
 		'beginsWithTrie',
@@ -12,11 +12,11 @@ Class {
 { #category : #updating }
 AlpTrieIndex >> atEntry: aKey add: aMethod [
 
-	self isRebuild
-		ifTrue: [ ^ initialTable
-				at: aKey asLowercase
-				update: [ :previous | previous copyWith: aMethod ]
-				initial: [ {aMethod} ] ].
+	self isRebuild ifTrue: [ 
+		^ initialTable
+			at: aKey asLowercase
+			update: [ :previous | previous copyWith: aMethod ]
+			initial: [ {aMethod} ] ].
 			
 	self updateBeginsWith: aKey asLowercase with: {aMethod}.				
 	self updateSubstrings: aKey asLowercase with: {aMethod}.
@@ -25,9 +25,15 @@ AlpTrieIndex >> atEntry: aKey add: aMethod [
 { #category : #accessing }
 AlpTrieIndex >> atEntry: aString remove: aMethod [ 
 	
-	beginsWithTrie at: aString asLowercase update: [ :previous |  | newValue |
-		newValue := previous copyWithout: aMethod.
-		newValue ifEmpty: [ nil ] ifNotEmpty: [ newValue ]].
+	beginsWithTrie 
+		at: aString asLowercase 
+		update: [ :previous | 
+			| newValue |
+			newValue := previous copyWithout: aMethod.
+			newValue 
+				ifNotEmpty: [ newValue ]
+				ifEmpty: [ nil ] ]
+		initial: [ nil ].
 	
 	self remove: {aMethod} fromSubstring: aString
 ]
@@ -52,12 +58,6 @@ AlpTrieIndex >> endRebuild [
 
 
 	initialTable := nil.
-]
-
-{ #category : #updating }
-AlpTrieIndex >> indexMethod: aMethod [
-
-	self subclassResponsibility
 ]
 
 { #category : #initialization }

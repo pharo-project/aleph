@@ -196,10 +196,10 @@ AlpIndexManager >> rebuildAll [
 	self unsubscribeFromSystemAnnouncer.
 
 	[	indexes := self newDefaultIndexes.
-		indexes values do: [ :e | e beginRebuild ].
+		indexes values do: [ :each | each beginRebuild ].
 		self navigation allMethodsDo: [ :eachMethod |
 			indexes values do: [ :eachIndex | eachIndex indexMethod: eachMethod ] ]. 
-		indexes values do: [ :e | e endRebuild ]]
+		indexes values do: [ :each | each endRebuild ] ]
 	ensure: [ 
 		self subscribeToSystemAnnouncer.
 		self active: oldActive ]

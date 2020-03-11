@@ -1,14 +1,43 @@
 Class {
 	#name : #AlpIndex,
 	#superclass : #Object,
-	#instVars : [
-		'table'
-	],
 	#category : #Aleph
 }
 
-{ #category : #accessing }
-AlpIndex >> table [
+{ #category : #updating }
+AlpIndex >> beginRebuild [
+]
 
-	^ table
+{ #category : #updating }
+AlpIndex >> endRebuild [
+]
+
+{ #category : #updating }
+AlpIndex >> indexMethod: aMethod [
+
+	self subclassResponsibility 
+]
+
+{ #category : #updating }
+AlpIndex >> methodAdded: aMethod [
+
+	self subclassResponsibility
+]
+
+{ #category : #updating }
+AlpIndex >> methodModifiedFrom: oldMethod to: newMethod [ 
+
+	self subclassResponsibility
+]
+
+{ #category : #updating }
+AlpIndex >> methodRemoved: aMethod [
+
+	self subclassResponsibility
+]
+
+{ #category : #'instance creation' }
+AlpIndex >> referencesTo: aString [ 
+
+	self subclassResponsibility
 ]

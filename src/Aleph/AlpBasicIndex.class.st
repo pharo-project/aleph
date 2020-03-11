@@ -1,6 +1,6 @@
 Class {
 	#name : #AlpBasicIndex,
-	#superclass : #Object,
+	#superclass : #AlpIndex,
 	#instVars : [
 		'table'
 	],
@@ -28,12 +28,6 @@ AlpBasicIndex >> beginRebuild [
 
 { #category : #updating }
 AlpBasicIndex >> endRebuild [
-]
-
-{ #category : #updating }
-AlpBasicIndex >> indexMethod: aMethod [
-
-	self subclassResponsibility 
 ]
 
 { #category : #initialization }
