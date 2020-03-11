@@ -78,3 +78,9 @@ AlpIndex >> startSize [
 
 	^ 1000000
 ]
+
+{ #category : #accessing }
+AlpIndex >> table [
+
+	^ table
+]
