@@ -22,10 +22,14 @@ AlpSendersIndex >> methodRemoved: aMethod [
 { #category : #private }
 AlpSendersIndex >> sendersOf: aMethod do: aBlock [
 
-	aMethod literals do: [ :each |
-		each isSymbol ifTrue: [ aBlock value: each ] ].
-	aMethod specialLiterals do: [ :each |
-		aBlock value: each ].
-	aMethod pragmas do: [ :each |
-		aBlock value: each selector ]
+	"I use a Set to guarantee that the repeted literals are only stored once"
+	| senders |
+	senders := Set new.
+
+	aMethod literals do: [ :each | each isSymbol ifTrue: [ senders add: each ] ].
+	aMethod specialLiterals do: [ :each | senders add: each].
+	aMethod pragmas do: [ :each | senders add: each selector ].
+	
+	senders do: aBlock
+	
 ]
