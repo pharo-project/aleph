@@ -109,25 +109,25 @@ AlpIndexManager >> ensureWorkerRunning [
 { #category : #query }
 AlpIndexManager >> findImplementorsOf: aLiteral [
 
-	^ (self indexAt: AlpImplementorsIndex) referencesTo: aLiteral
+	^ (self indexAt: #implementors) referencesTo: aLiteral
 ]
 
 { #category : #query }
 AlpIndexManager >> findReferencesTo: aLiteral [
 
-	^ (self indexAt: AlpReferencesIndex) referencesTo: aLiteral
+	^ (self indexAt: #references) referencesTo: aLiteral
 ]
 
 { #category : #query }
 AlpIndexManager >> findSendersOf: aLiteral [
 
-	^ (self indexAt: AlpSendersIndex) referencesTo: aLiteral
+	^ (self indexAt: #senders) referencesTo: aLiteral
 ]
 
 { #category : #private }
-AlpIndexManager >> indexAt: aClass [
+AlpIndexManager >> indexAt: aType [
 
-	^ indexes detect: [ :each | each class = aClass ]
+	^ indexes at: aType
 ]
 
 { #category : #initialization }
@@ -183,11 +183,9 @@ AlpIndexManager >> navigation: aNavigation [
 { #category : #initialization }
 AlpIndexManager >> newDefaultIndexes [
 
-	^ { 
-	AlpImplementorsIndex new.
-	AlpReferencesIndex new.
-	AlpSendersIndex new.
-	 }
+	^ { #implementors -> AlpImplementorsIndex new.
+		 #references -> AlpReferencesIndex new.
+		 #senders -> AlpSendersIndex new. } asDictionary 
 ]
 
 { #category : #building }
@@ -196,10 +194,12 @@ AlpIndexManager >> rebuildAll [
 
 	oldActive := self isActive.
 	self unsubscribeFromSystemAnnouncer.
-	[
-		indexes := self newDefaultIndexes.
+
+	[	indexes := self newDefaultIndexes.
+		indexes values do: [ :e | e beginRebuild ].
 		self navigation allMethodsDo: [ :eachMethod |
-			indexes do: [ :eachIndex | eachIndex indexMethod: eachMethod ] ] ]
+			indexes values do: [ :eachIndex | eachIndex indexMethod: eachMethod ] ]. 
+		indexes values do: [ :e | e endRebuild ]]
 	ensure: [ 
 		self subscribeToSystemAnnouncer.
 		self active: oldActive ]
@@ -234,5 +234,5 @@ AlpIndexManager >> unsubscribeFromSystemAnnouncer [
 AlpIndexManager >> withTaskDo: aBlock [
 
 	self ensureWorkerRunning.
-	worker schedule: [ indexes do: aBlock ]
+	worker schedule: [ indexes values do: aBlock ]
 ]

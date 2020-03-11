@@ -1,40 +1,27 @@
 Class {
 	#name : #AlpReferencesIndex,
-	#superclass : #AlpIndex,
+	#superclass : #AlpTrieIndex,
 	#category : #Aleph
 }
-
-{ #category : #building }
-AlpReferencesIndex >> buildIndex [
-
-	self navigation allMethodsDo: [ :each |
-		self indexMethod: each ]
-]
 
 { #category : #building }
 AlpReferencesIndex >> indexMethod: aMethod [
 
 	self referencesOf: aMethod do: [ :aVariable | 
-		(self indexAt: aVariable) add: aMethod ]
-]
-
-{ #category : #updating }
-AlpReferencesIndex >> methodAdded: aMethod [
-
-	self indexMethod: aMethod
+		self atEntry: aVariable add: aMethod ]
 ]
 
 { #category : #updating }
 AlpReferencesIndex >> methodRemoved: aMethod [
 
 	self referencesOf: aMethod do: [ :aVariable | 
-		self remove: aMethod fromEntry: aVariable ]
+		self atEntry: aVariable remove: aMethod ]
 ]
 
 { #category : #private }
 AlpReferencesIndex >> referencesOf: aMethod do: aBlock [
 
-	aMethod literals 
-		select: [ :each | each isVariableBinding ]
-		thenDo: [ :each | aBlock value: each key ]
+	(aMethod literals 
+		select: [ :each | each isVariableBinding ]) asSet
+		do: [ :each | aBlock value: each key ]
 ]

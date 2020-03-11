@@ -10,6 +10,10 @@ BaselineOfAleph >> baseline: spec [
 
 	spec for: #'common' do: [
 		self taskit: spec.
+		spec
+			baseline: 'ContainersTrie'
+			with: [ spec repository: 'github://pharo-containers/Containers-Trie/src' ].
+
 		spec 
 			package: #'Aleph';
 			package: #'Aleph-Tests' ]
