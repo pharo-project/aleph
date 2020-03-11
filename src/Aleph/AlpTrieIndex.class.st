@@ -144,7 +144,7 @@ AlpTrieIndex >> updateBeginsWith: aKey with: aCollectionOfMethods [
 	beginsWithTrie
 		at: aKey
 		update: [ :previous | previous , aCollectionOfMethods ]
-		initial: [ {aCollectionOfMethods} ]
+		initial: [ aCollectionOfMethods ]
 ]
 
 { #category : #updating }
