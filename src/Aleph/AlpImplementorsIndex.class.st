@@ -1,32 +1,18 @@
 Class {
 	#name : #AlpImplementorsIndex,
-	#superclass : #AlpIndex,
+	#superclass : #AlpTrieIndex,
 	#category : #Aleph
 }
 
 { #category : #building }
-AlpImplementorsIndex >> buildIndex [
-
-	self navigation allMethodsDo: [ :each |
-		self indexMethod: each ]
-]
-
-{ #category : #building }
 AlpImplementorsIndex >> indexMethod: aMethod [
 
-	(self indexAt: aMethod selector) add: aMethod
-]
+	self atEntry: aMethod selector add: aMethod.
 
-{ #category : #updating }
-AlpImplementorsIndex >> methodAdded: aMethod [
-
-	self indexMethod: aMethod
 ]
 
 { #category : #updating }
 AlpImplementorsIndex >> methodRemoved: aMethod [
 
-	self 
-		remove: aMethod 
-		fromEntry: aMethod selector
+	self atEntry: aMethod selector remove: aMethod
 ]

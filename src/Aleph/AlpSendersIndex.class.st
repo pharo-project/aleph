@@ -1,44 +1,35 @@
 Class {
 	#name : #AlpSendersIndex,
-	#superclass : #AlpIndex,
+	#superclass : #AlpBasicIndex,
 	#category : #Aleph
 }
-
-{ #category : #building }
-AlpSendersIndex >> buildIndex [
-
-	self navigation allMethodsDo: [ :each |
-		self indexMethod: each ]
-]
 
 { #category : #building }
 AlpSendersIndex >> indexMethod: aMethod [
 
 	self 
 		sendersOf: aMethod 
-		do: [ :aSelector | (self indexAt: aSelector) add: aMethod ]
-]
-
-{ #category : #updating }
-AlpSendersIndex >> methodAdded: aMethod [
-
-	self indexMethod: aMethod
+		do: [ :aSelector | self atEntry: aSelector add: aMethod ]
 ]
 
 { #category : #updating }
 AlpSendersIndex >> methodRemoved: aMethod [
 
 	self sendersOf: aMethod do: [ :aSelector | 
-		self remove: aMethod fromEntry: aSelector ]
+		self atEntry: aSelector remove: aMethod ]
 ]
 
 { #category : #private }
 AlpSendersIndex >> sendersOf: aMethod do: aBlock [
 
-	aMethod literals do: [ :each |
-		each isSymbol ifTrue: [ aBlock value: each ] ].
-	aMethod specialLiterals do: [ :each |
-		aBlock value: each ].
-	aMethod pragmas do: [ :each |
-		aBlock value: each selector ]
+	"I use a Set to guarantee that the repeted literals are only stored once"
+	| senders |
+	senders := Set new.
+
+	aMethod literals do: [ :each | each isSymbol ifTrue: [ senders add: each ] ].
+	aMethod specialLiterals do: [ :each | senders add: each].
+	aMethod pragmas do: [ :each | senders add: each selector ].
+	
+	senders do: aBlock
+	
 ]
