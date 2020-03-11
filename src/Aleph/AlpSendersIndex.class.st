@@ -1,35 +1,22 @@
 Class {
 	#name : #AlpSendersIndex,
-	#superclass : #AlpIndex,
+	#superclass : #AlpBasicIndex,
 	#category : #Aleph
 }
-
-{ #category : #building }
-AlpSendersIndex >> buildIndex [
-
-	self navigation allMethodsDo: [ :each |
-		self indexMethod: each ]
-]
 
 { #category : #building }
 AlpSendersIndex >> indexMethod: aMethod [
 
 	self 
 		sendersOf: aMethod 
-		do: [ :aSelector | (self indexAt: aSelector) add: aMethod ]
-]
-
-{ #category : #updating }
-AlpSendersIndex >> methodAdded: aMethod [
-
-	self indexMethod: aMethod
+		do: [ :aSelector | self atEntry: aSelector add: aMethod ]
 ]
 
 { #category : #updating }
 AlpSendersIndex >> methodRemoved: aMethod [
 
 	self sendersOf: aMethod do: [ :aSelector | 
-		self remove: aMethod fromEntry: aSelector ]
+		self atEntry: aSelector remove: aMethod ]
 ]
 
 { #category : #private }
