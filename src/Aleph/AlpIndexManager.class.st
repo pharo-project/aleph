@@ -90,7 +90,6 @@ AlpIndexManager >> doMethodAdded: aMethod [
 AlpIndexManager >> doMethodModifiedFrom: oldMethod to: newMethod [
 
 	self withTaskDo: [ :each | 
-		self halt.
 		each methodModifiedFrom: oldMethod to: newMethod ]
 ]
 
