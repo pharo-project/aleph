@@ -13,7 +13,7 @@ AlpReferencesIndexTest >> indexClass [
 { #category : #tests }
 AlpReferencesIndexTest >> testIndexMethod [
 	
-	self index indexMethod: self compiledMethod1.
+	self index methodAdded: self compiledMethod1.
 	
 	self assert: (self index referencesTo: #Object) size equals: 1.
 	self assert: (self index referencesTo: #DoesNotExist) isEmpty
@@ -30,7 +30,7 @@ AlpReferencesIndexTest >> testMethodAdded [
 { #category : #tests }
 AlpReferencesIndexTest >> testMethodModifiedFromTo [
 
-	self index indexMethod: self compiledMethod1.
+	self index methodAdded: self compiledMethod1.
 
 	self index
 		methodModifiedFrom: self compiledMethod1
@@ -43,7 +43,7 @@ AlpReferencesIndexTest >> testMethodModifiedFromTo [
 { #category : #tests }
 AlpReferencesIndexTest >> testMethodRemoved [
 	
-	self index indexMethod: self compiledMethod1.
+	self index methodAdded: self compiledMethod1.
 	self index methodRemoved: self compiledMethod1.
 	
 	self assert: (self index referencesTo: #Object) size equals: 0

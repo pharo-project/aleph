@@ -4,14 +4,14 @@ Class {
 	#category : #Aleph
 }
 
-{ #category : #building }
-AlpImplementorsIndex >> indexMethod: aMethod [
+{ #category : #'updating - methods' }
+AlpImplementorsIndex >> methodAdded: aMethod [
 
 	self atEntry: aMethod selector add: aMethod.
 
 ]
 
-{ #category : #updating }
+{ #category : #'updating - methods' }
 AlpImplementorsIndex >> methodRemoved: aMethod [
 
 	self atEntry: aMethod selector remove: aMethod

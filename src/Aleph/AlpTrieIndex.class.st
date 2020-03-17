@@ -74,26 +74,6 @@ AlpTrieIndex >> isRebuild [
 	^ initialTable isNotNil
 ]
 
-{ #category : #updating }
-AlpTrieIndex >> methodAdded: aMethod [
-
-	self indexMethod: aMethod
-]
-
-{ #category : #updating }
-AlpTrieIndex >> methodModifiedFrom: oldMethod to: newMethod [ 
-
-	self methodRemoved: oldMethod.
-	self methodAdded: newMethod
-	
-]
-
-{ #category : #updating }
-AlpTrieIndex >> methodRemoved: aMethod [
-
-	self subclassResponsibility
-]
-
 { #category : #accessing }
 AlpTrieIndex >> navigation [
 
@@ -132,6 +112,23 @@ AlpTrieIndex >> remove: aCollectionOfMethods fromSubstring: aKey [
 				initial: [ nil ] ]
 ]
 
+{ #category : #accessing }
+AlpTrieIndex >> removeEntry: aString [
+	
+	beginsWithTrie 
+		at: aString asLowercase 
+		update: [ :previous | nil ]
+		initial: [ nil ].
+	
+	self
+		withSuffixesOf: aString
+		do: [ :each | 
+			substringTrie
+				at: each asLowercase
+				update: [ :previous | nil ]
+				initial: [ nil ] ]
+]
+
 { #category : #initialization }
 AlpTrieIndex >> startSize [
 
@@ -157,6 +154,14 @@ AlpTrieIndex >> updateSubstrings: aKey with: aCollectionOfMethods [
 				at: each asLowercase
 				update: [ :previous | previous , aCollectionOfMethods ]
 				initial: [ aCollectionOfMethods ] ]
+]
+
+{ #category : #querying }
+AlpTrieIndex >> withAllValuesBeginningWith: aString do: aBlockClosure [ 
+
+	^ beginsWithTrie 
+		withAllValuesBeginningWith: aString asLowercase 
+		do: [ :aCollectionOfMethods | aCollectionOfMethods do: aBlockClosure ]
 ]
 
 { #category : #updating }

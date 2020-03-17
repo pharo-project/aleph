@@ -24,8 +24,10 @@ Class {
 
 { #category : #accessing }
 AlpIndexManager class >> activate [
+	<script>
 
-	self current active: true
+	self current active: true.
+
 ]
 
 { #category : #'instance creation' }
@@ -74,10 +76,24 @@ AlpIndexManager >> active: aBoolean [
 ]
 
 { #category : #updating }
+AlpIndexManager >> classAdded: ann [ 
+
+	self withTaskDo: [ :each | each classAdded: ann classAdded ]
+]
+
+{ #category : #updating }
 AlpIndexManager >> classRemoved: ann [ 
 
 	ann classRemoved methodsDo: [ :each |
-		self doMethodRemoved: each ]
+		self doMethodRemoved: each ].
+	
+	self withTaskDo: [ :each | each classRemoved: ann classRemoved ]
+]
+
+{ #category : #updating }
+AlpIndexManager >> classRenamed: ann [ 
+
+	self withTaskDo: [ :each | each class: ann classRenamed renamedFrom: ann oldName to: ann newName  ]
 ]
 
 { #category : #private }
@@ -198,7 +214,9 @@ AlpIndexManager >> rebuildAll [
 	[	indexes := self newDefaultIndexes.
 		indexes values do: [ :each | each beginRebuild ].
 		self navigation allMethodsDo: [ :eachMethod |
-			indexes values do: [ :eachIndex | eachIndex indexMethod: eachMethod ] ]. 
+			indexes values do: [ :eachIndex | eachIndex methodAdded: eachMethod ] ]. 
+		self navigation allBehaviorsDo: [ :eachBehavior |  
+			indexes values do: [ :eachIndex | eachIndex classAdded: eachBehavior ]].
 		indexes values do: [ :each | each endRebuild ] ]
 	ensure: [ 
 		self subscribeToSystemAnnouncer.
@@ -216,11 +234,15 @@ AlpIndexManager >> shutDown [
 AlpIndexManager >> subscribeToSystemAnnouncer [
 
 	self unsubscribeFromSystemAnnouncer.
+
 	SystemAnnouncer uniqueInstance weak
 		when: ClassRemoved send: #classRemoved: to: self;
+		when: ClassAdded send: #classAdded: to: self;
+		when: ClassRenamed send: #classRenamed: to: self;
+
 		when: MethodAdded send: #methodAdded: to: self;
 		when: MethodRemoved send: #methodRemoved: to: self;
-		when: MethodModified send: #methodModified: to: self
+		when: MethodModified send: #methodModified: to: self.
 	
 ]
 

@@ -13,7 +13,7 @@ AlpSendersIndexTest >> indexClass [
 { #category : #tests }
 AlpSendersIndexTest >> testIndexMethod [
 	
-	self index indexMethod: self compiledMethod1.
+	self index methodAdded: self compiledMethod1.
 	
 	self assert: (self index referencesTo: #className) size equals: 1.
 	self assert: (self index referencesTo: #name) size equals: 1.
@@ -36,7 +36,7 @@ AlpSendersIndexTest >> testMethodAdded [
 { #category : #tests }
 AlpSendersIndexTest >> testMethodModifiedFromTo [
 
-	self index indexMethod: self compiledMethod1.
+	self index methodAdded: self compiledMethod1.
 	self index 
 		methodModifiedFrom: self compiledMethod1
 		to: self compiledMethod1Modified.
@@ -57,7 +57,7 @@ AlpSendersIndexTest >> testMethodModifiedFromTo [
 { #category : #tests }
 AlpSendersIndexTest >> testMethodRemoved [
 
-	self index indexMethod: self compiledMethod1.
+	self index methodAdded: self compiledMethod1.
 	self index methodRemoved: self compiledMethod1.
 	
 	self assert: (self index referencesTo: #className) size equals: 0.

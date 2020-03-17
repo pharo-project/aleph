@@ -4,15 +4,15 @@ Class {
 	#category : #Aleph
 }
 
-{ #category : #building }
-AlpSendersIndex >> indexMethod: aMethod [
+{ #category : #'updating - methods' }
+AlpSendersIndex >> methodAdded: aMethod [
 
 	self 
 		sendersOf: aMethod 
 		do: [ :aSelector | self atEntry: aSelector add: aMethod ]
 ]
 
-{ #category : #updating }
+{ #category : #'updating - methods' }
 AlpSendersIndex >> methodRemoved: aMethod [
 
 	self sendersOf: aMethod do: [ :aSelector | 

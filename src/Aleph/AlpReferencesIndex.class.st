@@ -1,17 +1,17 @@
 Class {
 	#name : #AlpReferencesIndex,
-	#superclass : #AlpTrieIndex,
+	#superclass : #AlpBasicIndex,
 	#category : #Aleph
 }
 
-{ #category : #building }
-AlpReferencesIndex >> indexMethod: aMethod [
+{ #category : #'updating - methods' }
+AlpReferencesIndex >> methodAdded: aMethod [
 
 	self referencesOf: aMethod do: [ :aVariable | 
 		self atEntry: aVariable add: aMethod ]
 ]
 
-{ #category : #updating }
+{ #category : #'updating - methods' }
 AlpReferencesIndex >> methodRemoved: aMethod [
 
 	self referencesOf: aMethod do: [ :aVariable | 

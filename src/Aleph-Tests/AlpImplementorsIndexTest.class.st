@@ -13,7 +13,7 @@ AlpImplementorsIndexTest >> indexClass [
 { #category : #tests }
 AlpImplementorsIndexTest >> testIndexMethod [
 	
-	self index indexMethod: self compiledMethod1.
+	self index methodAdded: self compiledMethod1.
 	
 	self 
 		assert: (self index referencesTo: #method1) size
@@ -30,7 +30,7 @@ AlpImplementorsIndexTest >> testMethodAdded [
 { #category : #tests }
 AlpImplementorsIndexTest >> testMethodModifiedFromTo [
 
-	self index indexMethod: self compiledMethod1.
+	self index methodAdded: self compiledMethod1.
 
 	self index
 		methodModifiedFrom: self compiledMethod1
@@ -44,7 +44,7 @@ AlpImplementorsIndexTest >> testMethodModifiedFromTo [
 { #category : #tests }
 AlpImplementorsIndexTest >> testMethodRemoved [
 
-	self index indexMethod: self compiledMethod1.
+	self index methodAdded: self compiledMethod1.
 	self index methodRemoved: self compiledMethod1.
 	
 	self 

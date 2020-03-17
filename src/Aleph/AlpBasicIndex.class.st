@@ -37,20 +37,6 @@ AlpBasicIndex >> initialize [
 	table := IdentityDictionary new
 ]
 
-{ #category : #updating }
-AlpBasicIndex >> methodAdded: aMethod [
-
-	self indexMethod: aMethod
-]
-
-{ #category : #updating }
-AlpBasicIndex >> methodModifiedFrom: oldMethod to: newMethod [ 
-
-	self methodRemoved: oldMethod.
-	self methodAdded: newMethod
-	
-]
-
 { #category : #accessing }
 AlpBasicIndex >> referencesTo: aString [ 
 	
