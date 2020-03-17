@@ -201,6 +201,7 @@ AlpIndexManager >> newDefaultIndexes [
 
 	^ { #implementors -> AlpImplementorsIndex new.
 		 #references -> AlpReferencesIndex new.
+		 #classes -> AlpClassesIndex new.
 		 #senders -> AlpSendersIndex new. } asDictionary 
 ]
 
