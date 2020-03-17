@@ -164,6 +164,18 @@ AlpTrieIndex >> withAllValuesBeginningWith: aString do: aBlockClosure [
 		do: [ :aCollectionOfMethods | aCollectionOfMethods do: aBlockClosure ]
 ]
 
+{ #category : #querying }
+AlpTrieIndex >> withAllValuesWithSubstring: aString do: aBlockClosure [ 
+
+	beginsWithTrie 
+		withAllValuesBeginningWith: aString asLowercase 
+		do: [ :aCollectionOfMethods | aCollectionOfMethods do: aBlockClosure ].
+
+	substringTrie 
+		withAllValuesBeginningWith: aString asLowercase 
+		do: [ :aCollectionOfMethods | aCollectionOfMethods do: aBlockClosure ]
+]
+
 { #category : #updating }
 AlpTrieIndex >> withSuffixesOf: aString do: aBlock [
 
