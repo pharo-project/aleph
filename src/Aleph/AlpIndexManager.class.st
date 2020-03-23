@@ -117,13 +117,19 @@ AlpIndexManager >> doMethodRemoved: aMethod [
 
 { #category : #building }
 AlpIndexManager >> doRebuildIndexes [
-	
-	self navigation allBehaviors 
-		do: [ :eachBehavior | 
-			indexes values do: [ :eachIndex | eachIndex classAdded: eachBehavior ].
-			eachBehavior methodsDo: [ :eachMethod | 
-				indexes values do: [ :eachIndex | eachIndex methodAdded: eachMethod ]]
-		] displayingProgress: [:eachBehavior| 'Indexing ' , eachBehavior name]. 
+
+	indexes values 
+		do: [ :eachIndex | 
+			eachIndex beginRebuild.
+			self navigation allBehaviors 
+				do: [ :eachBehavior | 
+					eachIndex classAdded: eachBehavior.
+					eachBehavior methodsDo: [ :eachMethod | 
+						eachIndex methodAdded: eachMethod ].
+				] displayingProgress: [:eachBehavior| 'Indexing ' , eachBehavior name].
+			eachIndex endRebuild] 
+		displayingProgress: [ :eachIndex | eachIndex class name].
+
 ]
 
 { #category : #private }
@@ -224,11 +230,8 @@ AlpIndexManager >> rebuildAll [
 	self unsubscribeFromSystemAnnouncer.
 	active := false.
 
-	[	indexes := self newDefaultIndexes.
-		indexes values do: [ :each | each beginRebuild ] displayingProgress: 'Begining Rebuild...'.
-		self doRebuildIndexes.
-		indexes values do: [ :each | each endRebuild ] displayingProgress: 'Ending Rebuild...'
-		]
+	[ indexes := self newDefaultIndexes.
+		self doRebuildIndexes ]
 	ensure: [ 
 		self subscribeToSystemAnnouncer.
 		self active: oldActive ]

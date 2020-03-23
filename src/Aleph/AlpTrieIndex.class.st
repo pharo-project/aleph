@@ -15,18 +15,18 @@ AlpTrieIndex >> atEntry: aKey add: aMethod [
 
 	self isRebuild ifTrue: [ 
 		(initialTable
-			at: aKey asLowercase ifAbsentPut: [ IdentitySet new: 100 ])
+			at: aKey asLowercase ifAbsentPut: [ OrderedCollection new: 100 ])
 			add: aMethod. 
 
 		self withSuffixesOf: aKey asLowercase do: [ :aSuffix | 
 			(initialSubstringTable 
-				at: aSuffix ifAbsentPut: [ IdentitySet new: 100 ])
+				at: aSuffix ifAbsentPut: [ OrderedCollection new: 100 ])
 				add: aMethod].
 			
 		^ self ].
 			
 	self updateBeginsWith: aKey asLowercase with: {aMethod}.				
-	self updateDuringRebuildSubstrings: aKey asLowercase with: {aMethod}.
+	self updateSubstrings: aKey asLowercase with: {aMethod}.
 ]
 
 { #category : #accessing }
@@ -48,8 +48,8 @@ AlpTrieIndex >> atEntry: aString remove: aMethod [
 { #category : #updating }
 AlpTrieIndex >> beginRebuild [
 
-	initialTable := IdentityDictionary new:10000.
-	initialSubstringTable := IdentityDictionary new:100000.
+	initialTable := Dictionary new:100000.
+	initialSubstringTable := Dictionary new:10000000.
 	beginsWithTrie := nil.
 	substringTrie := nil.
 ]
@@ -60,18 +60,16 @@ AlpTrieIndex >> endRebuild [
 	beginsWithTrie := CTOptimizedTrie new.
 	substringTrie := CTOptimizedTrie new.
 	
-	self halt.
-
 	initialTable associations 
 		do: [ :assoc | | methods | 
 			methods := assoc value asArray.
 			self updateBeginsWith: assoc key asLowercase with: methods]
 		displayingProgress: [ :assoc | 'Indexing Trie:', assoc key ].
 
-	initialTable associations 
+	initialSubstringTable associations 
 		do: [ :assoc | | methods | 
 			methods := assoc value asArray.
-			self updateSubstrings: assoc key asLowercase with: methods]
+			substringTrie at: assoc key asLowercase put: methods]
 		displayingProgress: [ :assoc | 'Indexing Suffixes Trie:', assoc key ].
 
 	initialTable := nil.
@@ -197,7 +195,6 @@ AlpTrieIndex >> withAllValuesWithSubstring: aString do: aBlockClosure [
 { #category : #updating }
 AlpTrieIndex >> withSuffixesOf: aString do: aBlock [
 
-	aString suffixes
-		select: [ :each | each ~= aString and: [ each size > 2 ] ]
-		thenDo: aBlock
+	aString suffixesDo: aBlock minLength: 2.
+
 ]

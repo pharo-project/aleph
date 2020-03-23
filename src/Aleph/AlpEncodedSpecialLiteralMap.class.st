@@ -2,57 +2,35 @@ Class {
 	#name : #AlpEncodedSpecialLiteralMap,
 	#superclass : #Object,
 	#instVars : [
-		'maps'
-	],
-	#classInstVars : [
-		'uniqueInstance'
+		'literals',
+		'initialBytecode'
 	],
 	#category : #Aleph
 }
 
 { #category : #accessing }
-AlpEncodedSpecialLiteralMap class >> mapFor: anEncoderClass [
+AlpEncodedSpecialLiteralMap >> at:anIndex ifPresent: aBlock [ 
 
-	^ self uniqueInstance mapAt: anEncoderClass
-]
-
-{ #category : #'instance creation' }
-AlpEncodedSpecialLiteralMap class >> new [
-
-	self error: 'Use #uniqueInstance'
-]
-
-{ #category : #'instance creation' }
-AlpEncodedSpecialLiteralMap class >> uniqueInstance [
-
-	^ uniqueInstance ifNil: [ uniqueInstance := super new ]
-]
-
-{ #category : #private }
-AlpEncodedSpecialLiteralMap >> createMapFor: anEncoderClass [
-	| specialLiterals specialLiteralMap |
-
-	specialLiterals := (Smalltalk specialObjectsArray at: 24) select: [ :each | each isSymbol ].
-	specialLiteralMap := SmallDictionary new: specialLiterals size.
-	specialLiterals do: [ :literal | 
-		specialLiteralMap 
-			at: (anEncoderClass firstSpecialSelectorByte + (Smalltalk specialSelectorIndexOrNil: literal)) 
-			put: literal ].	
-			
-	^ specialLiteralMap
-]
-
-{ #category : #initialization }
-AlpEncodedSpecialLiteralMap >> initialize [
-
-	super initialize.
-	maps := SmallDictionary new
+	(anIndex between: initialBytecode and: initialBytecode + literals size)
+		ifFalse: [ ^ self ].
+		
+	^ aBlock value: (literals at: anIndex - initialBytecode)
 ]
 
 { #category : #accessing }
-AlpEncodedSpecialLiteralMap >> mapAt: anEncoderClass [
+AlpEncodedSpecialLiteralMap >> at: anIndex put: aValue [
 
-	^ maps 
-		at: anEncoderClass 
-		ifAbsentPut: [ self createMapFor: anEncoderClass ]
+	literals at: anIndex - initialBytecode put: aValue
+]
+
+{ #category : #accessing }
+AlpEncodedSpecialLiteralMap >> firstSpecialSelectorByte: aValue [
+
+	initialBytecode := aValue
+]
+
+{ #category : #accessing }
+AlpEncodedSpecialLiteralMap >> size: aSize [
+
+	literals := Array new: aSize
 ]

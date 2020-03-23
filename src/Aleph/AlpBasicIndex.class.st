@@ -18,7 +18,7 @@ AlpBasicIndex >> atEntry: aString add: aMethod [
 
 	table
 		at: aString
-		update: [ :previous | previous copyWith: aMethod ]
+		update: [ :previous | previous ifNil: [ aMethod ] ifNotNil: [ previous copyWith: aMethod ] ]
 		initial: {aMethod}
 ]
 
