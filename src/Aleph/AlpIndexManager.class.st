@@ -115,6 +115,17 @@ AlpIndexManager >> doMethodRemoved: aMethod [
 	self withTaskDo: [ :each | each methodRemoved: aMethod ]
 ]
 
+{ #category : #building }
+AlpIndexManager >> doRebuildIndexes [
+	
+	self navigation allBehaviors 
+		do: [ :eachBehavior | 
+			indexes values do: [ :eachIndex | eachIndex classAdded: eachBehavior ].
+			eachBehavior methodsDo: [ :eachMethod | 
+				indexes values do: [ :eachIndex | eachIndex methodAdded: eachMethod ]]
+		] displayingProgress: [:eachBehavior| 'Indexing ' , eachBehavior name]. 
+]
+
 { #category : #private }
 AlpIndexManager >> ensureWorkerRunning [
 
@@ -211,14 +222,13 @@ AlpIndexManager >> rebuildAll [
 
 	oldActive := self isActive.
 	self unsubscribeFromSystemAnnouncer.
+	active := false.
 
 	[	indexes := self newDefaultIndexes.
-		indexes values do: [ :each | each beginRebuild ].
-		self navigation allMethodsDo: [ :eachMethod |
-			indexes values do: [ :eachIndex | eachIndex methodAdded: eachMethod ] ]. 
-		self navigation allBehaviorsDo: [ :eachBehavior |  
-			indexes values do: [ :eachIndex | eachIndex classAdded: eachBehavior ]].
-		indexes values do: [ :each | each endRebuild ] ]
+		indexes values do: [ :each | each beginRebuild ] displayingProgress: 'Begining Rebuild...'.
+		self doRebuildIndexes.
+		indexes values do: [ :each | each endRebuild ] displayingProgress: 'Ending Rebuild...'
+		]
 	ensure: [ 
 		self subscribeToSystemAnnouncer.
 		self active: oldActive ]

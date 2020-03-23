@@ -2,13 +2,19 @@ Class {
 	#name : #AlpBasicIndex,
 	#superclass : #AlpIndex,
 	#instVars : [
-		'table'
+		'table',
+		'duringRebuild'
 	],
 	#category : #Aleph
 }
 
 { #category : #accessing }
 AlpBasicIndex >> atEntry: aString add: aMethod [
+
+	duringRebuild ifTrue: [  
+		(table at: aString ifAbsentPut: [ IdentitySet new:100 ])
+			add: aMethod.
+		^ self ].
 
 	table
 		at: aString
@@ -24,17 +30,23 @@ AlpBasicIndex >> atEntry: aString remove: aMethod [
 
 { #category : #updating }
 AlpBasicIndex >> beginRebuild [
+	
+	duringRebuild := true.
 ]
 
 { #category : #updating }
 AlpBasicIndex >> endRebuild [
+
+	duringRebuild := false.
+	table associationsDo: [ :assoc | assoc value: (assoc value asArray) ]
 ]
 
 { #category : #initialization }
 AlpBasicIndex >> initialize [
 
 	super initialize.
-	table := IdentityDictionary new
+	table := IdentityDictionary new: 10000.
+	duringRebuild := false.
 ]
 
 { #category : #accessing }

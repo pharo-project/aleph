@@ -3,6 +3,7 @@ Class {
 	#superclass : #AlpIndex,
 	#instVars : [
 		'initialTable',
+		'initialSubstringTable',
 		'beginsWithTrie',
 		'substringTrie'
 	],
@@ -13,13 +14,19 @@ Class {
 AlpTrieIndex >> atEntry: aKey add: aMethod [
 
 	self isRebuild ifTrue: [ 
-		^ initialTable
-			at: aKey asLowercase
-			update: [ :previous | previous copyWith: aMethod ]
-			initial: [ {aMethod} ] ].
+		(initialTable
+			at: aKey asLowercase ifAbsentPut: [ IdentitySet new: 100 ])
+			add: aMethod. 
+
+		self withSuffixesOf: aKey asLowercase do: [ :aSuffix | 
+			(initialSubstringTable 
+				at: aSuffix ifAbsentPut: [ IdentitySet new: 100 ])
+				add: aMethod].
+			
+		^ self ].
 			
 	self updateBeginsWith: aKey asLowercase with: {aMethod}.				
-	self updateSubstrings: aKey asLowercase with: {aMethod}.
+	self updateDuringRebuildSubstrings: aKey asLowercase with: {aMethod}.
 ]
 
 { #category : #accessing }
@@ -41,7 +48,8 @@ AlpTrieIndex >> atEntry: aString remove: aMethod [
 { #category : #updating }
 AlpTrieIndex >> beginRebuild [
 
-	initialTable := IdentityDictionary new.
+	initialTable := IdentityDictionary new:10000.
+	initialSubstringTable := IdentityDictionary new:100000.
 	beginsWithTrie := nil.
 	substringTrie := nil.
 ]
@@ -51,13 +59,23 @@ AlpTrieIndex >> endRebuild [
 
 	beginsWithTrie := CTOptimizedTrie new.
 	substringTrie := CTOptimizedTrie new.
+	
+	self halt.
 
-	initialTable associationsDo: [ :assoc |
-		self updateBeginsWith: assoc key asLowercase with: assoc value.
-		self updateSubstrings: assoc key asLowercase with: assoc value].
+	initialTable associations 
+		do: [ :assoc | | methods | 
+			methods := assoc value asArray.
+			self updateBeginsWith: assoc key asLowercase with: methods]
+		displayingProgress: [ :assoc | 'Indexing Trie:', assoc key ].
 
+	initialTable associations 
+		do: [ :assoc | | methods | 
+			methods := assoc value asArray.
+			self updateSubstrings: assoc key asLowercase with: methods]
+		displayingProgress: [ :assoc | 'Indexing Suffixes Trie:', assoc key ].
 
 	initialTable := nil.
+	initialSubstringTable := nil.
 ]
 
 { #category : #initialization }
