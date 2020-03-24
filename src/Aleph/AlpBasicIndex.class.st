@@ -41,6 +41,12 @@ AlpBasicIndex >> endRebuild [
 	table associationsDo: [ :assoc | assoc value: (assoc value asArray) ]
 ]
 
+{ #category : #accessing }
+AlpBasicIndex >> initialTableSize [
+
+	^ self subclassResponsibility 
+]
+
 { #category : #initialization }
 AlpBasicIndex >> initialize [
 

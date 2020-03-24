@@ -48,8 +48,9 @@ AlpTrieIndex >> atEntry: aString remove: aMethod [
 { #category : #updating }
 AlpTrieIndex >> beginRebuild [
 
-	initialTable := Dictionary new:100000.
-	initialSubstringTable := Dictionary new:10000000.
+	initialTable := Dictionary new: self initialTableSize.
+	initialSubstringTable := Dictionary new:self initialTableSize * 40.
+
 	beginsWithTrie := nil.
 	substringTrie := nil.
 ]
@@ -74,6 +75,12 @@ AlpTrieIndex >> endRebuild [
 
 	initialTable := nil.
 	initialSubstringTable := nil.
+]
+
+{ #category : #updating }
+AlpTrieIndex >> initialTableSize [
+
+	^ self subclassResponsibility
 ]
 
 { #category : #initialization }

@@ -4,6 +4,12 @@ Class {
 	#category : #Aleph
 }
 
+{ #category : #updating }
+AlpImplementorsIndex >> initialTableSize [
+
+	^ statistics at: #numberOfSymbols
+]
+
 { #category : #'updating - methods' }
 AlpImplementorsIndex >> methodAdded: aMethod [
 

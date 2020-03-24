@@ -4,6 +4,12 @@ Class {
 	#category : #Aleph
 }
 
+{ #category : #accessing }
+AlpReferencesIndex >> initialTableSize [
+
+	^ statistics at: #numberOfClasses
+]
+
 { #category : #'updating - methods' }
 AlpReferencesIndex >> methodAdded: aMethod [
 

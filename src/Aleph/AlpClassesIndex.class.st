@@ -29,3 +29,9 @@ AlpClassesIndex >> classRemoved: aClass [
 	self atEntry: aClass name remove: aClass.
 
 ]
+
+{ #category : #updating }
+AlpClassesIndex >> initialTableSize [
+
+	^ statistics at: #numberOfClasses
+]

@@ -1,6 +1,9 @@
 Class {
 	#name : #AlpIndex,
 	#superclass : #Object,
+	#instVars : [
+		'statistics'
+	],
 	#category : #Aleph
 }
 
@@ -54,4 +57,10 @@ AlpIndex >> methodRemoved: aMethod [
 AlpIndex >> referencesTo: aString [ 
 
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+AlpIndex >> statistics: aDictionary [
+
+	statistics := aDictionary
 ]

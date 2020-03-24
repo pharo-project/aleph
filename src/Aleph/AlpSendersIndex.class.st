@@ -4,6 +4,12 @@ Class {
 	#category : #Aleph
 }
 
+{ #category : #accessing }
+AlpSendersIndex >> initialTableSize [
+
+	^ statistics at: #numberOfSymbols
+]
+
 { #category : #'updating - methods' }
 AlpSendersIndex >> methodAdded: aMethod [
 

@@ -14,7 +14,8 @@ Class {
 		'indexes',
 		'navigation',
 		'active',
-		'worker'
+		'worker',
+		'statistics'
 	],
 	#classVars : [
 		'Current'
@@ -116,20 +117,30 @@ AlpIndexManager >> doMethodRemoved: aMethod [
 ]
 
 { #category : #building }
+AlpIndexManager >> doRebuildIndex: eachIndex [
+
+	eachIndex statistics: statistics.
+	eachIndex beginRebuild.
+
+	self navigation allBehaviors
+		do: [ :eachBehavior | 
+			eachIndex classAdded: eachBehavior.
+			eachBehavior
+				methodsDo: [ :eachMethod | eachIndex methodAdded: eachMethod ] ]
+		displayingProgress: [ :eachBehavior | 'Indexing ' , eachBehavior name ].
+
+	^ eachIndex endRebuild
+]
+
+{ #category : #building }
 AlpIndexManager >> doRebuildIndexes [
 
-	indexes values 
-		do: [ :eachIndex | 
-			eachIndex beginRebuild.
-			self navigation allBehaviors 
-				do: [ :eachBehavior | 
-					eachIndex classAdded: eachBehavior.
-					eachBehavior methodsDo: [ :eachMethod | 
-						eachIndex methodAdded: eachMethod ].
-				] displayingProgress: [:eachBehavior| 'Indexing ' , eachBehavior name].
-			eachIndex endRebuild] 
-		displayingProgress: [ :eachIndex | eachIndex class name].
+	self generateStatistics.
 
+	indexes values
+		do:
+			[ :eachIndex | self doRebuildIndex: eachIndex ]
+		displayingProgress: [ :eachIndex | eachIndex class name ]
 ]
 
 { #category : #private }
@@ -155,6 +166,14 @@ AlpIndexManager >> findReferencesTo: aLiteral [
 AlpIndexManager >> findSendersOf: aLiteral [
 
 	^ (self indexAt: #senders) referencesTo: aLiteral
+]
+
+{ #category : #building }
+AlpIndexManager >> generateStatistics [
+
+	^ statistics := Dictionary newFromPairs: { 
+		#numberOfClasses. SystemNavigation default environment classNames size.
+	 	#numberOfSymbols. Symbol numberOfSymbols } 
 ]
 
 { #category : #private }
