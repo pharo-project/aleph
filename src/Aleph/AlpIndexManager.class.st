@@ -6,6 +6,9 @@ The manager subscribes to SystemAnnouncer to listen system changes (method addit
 We use a special task it runner in low priority to update the indexes in background, when the system is idle.
 
 The method rebuildAll will discard all previously existing indexes and re-build all from scratch. 
+
+There is only one instance of myself (well, that is the idea) and I can be activated or not. If I am activated I am used by Spotter and all the users of SystemNavigation. 
+Even if I am deactivated I still listen to the events in the system, to uninstall me, do me a reset in the class side.
 "
 Class {
 	#name : #AlpIndexManager,

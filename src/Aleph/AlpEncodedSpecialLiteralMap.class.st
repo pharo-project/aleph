@@ -1,3 +1,10 @@
+"
+I represent a more performant implementation of a map of bytecodes to literals. 
+I play with the idea that all the encoded literals in bytecode are calculated from an initial bytecode and then using the array of bytecodes.
+
+I am specific for a given Encoder.
+Access to my instances through #AlpEncodedSpecialLiteralMapProvider
+"
 Class {
 	#name : #AlpEncodedSpecialLiteralMap,
 	#superclass : #Object,

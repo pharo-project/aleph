@@ -1,3 +1,9 @@
+"
+I am used to provide a mapping between the encoded bytecodes and the immediate literals it represent. 
+I handle the idea of having different mappings per BytecodeEncoder.
+I hold inside an #AlpEncodedSpecialLiteralMap for each encoder. 
+Also I am the responsible to return it. Access the #AlpEncodedSpecialLiteralMap instances only through me!
+"
 Class {
 	#name : #AlpEncodedSpecialLiteralMapProvider,
 	#superclass : #Object,

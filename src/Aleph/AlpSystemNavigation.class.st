@@ -1,3 +1,6 @@
+"
+I am a SystemNavigation implementation that uses the indexes in Aleph for all the queries.
+"
 Class {
 	#name : #AlpSystemNavigation,
 	#superclass : #SystemNavigation,

@@ -1,3 +1,11 @@
+"
+I am the basic index in Aleph. 
+My subclasses should implement the response to the different system events that an index is interested in. 
+
+Basically, I implement a Dictionary with all the index entries. Inside each entry there is an array to store the elements that correspond to the entry.
+
+My subclasses should provide also the initialTableSize to customize how the table is initialized during the building of the index.
+"
 Class {
 	#name : #AlpBasicIndex,
 	#superclass : #AlpIndex,
@@ -32,6 +40,12 @@ AlpBasicIndex >> atEntry: aString remove: aMethod [
 AlpBasicIndex >> beginRebuild [
 	
 	duringRebuild := true.
+]
+
+{ #category : #updating }
+AlpBasicIndex >> clear [
+
+	self initialize.
 ]
 
 { #category : #updating }

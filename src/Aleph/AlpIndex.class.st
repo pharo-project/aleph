@@ -1,3 +1,16 @@
+"
+I represent the common interface of all the indexes in Aleph.
+I am stored in an AlpIndexManager and I should be used through it.
+
+There is two different behavior: 
+
+ - During the build of the index, the manager will call #beginRebuild, and then classAdded: and methodAdded: for each class and method in the system. Then I will receive #endRebuild. 
+
+ - During normal image modification I will be notified by the manager by #methodAdded:, #methodRemoved: and #methodModifiedFrom:to: and #classAdded: , #classRemoved: and #class:renamedFrom:to:
+
+My subclasses should implement this methods.
+Also I have an statistics Dictionary with some information passed by the manager so the indexes can improve the process of generation of the index. 
+"
 Class {
 	#name : #AlpIndex,
 	#superclass : #Object,
@@ -27,6 +40,12 @@ AlpIndex >> classAdded: aClass [
 AlpIndex >> classRemoved: aClass [
 
 	"This method should be overriden if the index is interested in aClass"
+]
+
+{ #category : #updating }
+AlpIndex >> clear [
+
+	^ self subclassResponsibility 
 ]
 
 { #category : #updating }

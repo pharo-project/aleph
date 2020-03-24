@@ -1,3 +1,8 @@
+"
+I am an index to improve the lookup of senders of a given selector.
+I go over all the methods and store which messages are sent. 
+I can handle the implicit literals encoded in the bytecode by using #AlpEncodedSpecialLiteralMapProvider
+"
 Class {
 	#name : #AlpSendersIndex,
 	#superclass : #AlpBasicIndex,

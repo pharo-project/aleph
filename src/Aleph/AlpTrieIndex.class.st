@@ -1,3 +1,17 @@
+"
+I am an index that uses two CTOptimizedTrie as the storage of the index.
+One trie is used to store the beginnings of the keys and the other the suffixes.
+My subclasses provide fulltext search on top of the index. 
+I am heavily used by the implementation of Spotter.
+
+My creation goes in two stages:
+
+1) During the building of the index, all the collection of the information is done using two Dictionaries to store the intermediate data. 
+
+2) Aftr all the data is calculated, the Optimized Tries are built to enhance the access to the index.
+
+Once the index is created the update is done directly on the tries.
+"
 Class {
 	#name : #AlpTrieIndex,
 	#superclass : #AlpIndex,
@@ -53,6 +67,12 @@ AlpTrieIndex >> beginRebuild [
 
 	beginsWithTrie := nil.
 	substringTrie := nil.
+]
+
+{ #category : #updating }
+AlpTrieIndex >> clear [
+
+	self initialize
 ]
 
 { #category : #updating }

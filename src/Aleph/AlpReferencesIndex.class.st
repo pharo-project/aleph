@@ -1,3 +1,7 @@
+"
+I am the index to store the references to a given class.
+I index the name of the global accessible variables and store them in a table with the class that they refer to. 
+"
 Class {
 	#name : #AlpReferencesIndex,
 	#superclass : #AlpBasicIndex,
