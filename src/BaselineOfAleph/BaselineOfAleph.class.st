@@ -12,7 +12,7 @@ BaselineOfAleph >> baseline: spec [
 		self taskit: spec.
 		spec
 			baseline: 'ContainersTrie'
-			with: [ spec repository: 'github://tesonep/Containers-Trie/src' ].
+			with: [ spec repository: 'github://pharo-containers/Containers-Trie/src' ].
 
 		spec 
 			package: #'Aleph';
