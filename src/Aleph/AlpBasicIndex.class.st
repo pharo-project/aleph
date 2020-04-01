@@ -20,20 +20,28 @@ Class {
 AlpBasicIndex >> atEntry: aString add: aMethod [
 
 	duringRebuild ifTrue: [  
-		(table at: aString ifAbsentPut: [ IdentitySet new:100 ])
+		(table 
+			at: aString 
+			ifAbsentPut: [ IdentitySet new:100 ])
 			add: aMethod.
 		^ self ].
 
 	table
 		at: aString
-		update: [ :previous | previous ifNil: [ aMethod ] ifNotNil: [ previous copyWith: aMethod ] ]
-		initial: {aMethod}
+		update: [ :previous | 
+			previous 
+				ifNotNil: [ previous copyWith: aMethod ]
+				ifNil: [ { aMethod } ]  ]
+		initial: [ { aMethod } ]
 ]
 
 { #category : #updating }
 AlpBasicIndex >> atEntry: aString remove: aMethod [ 
 	
-	^ table at: aString update: [ :previous | previous copyWithout: aMethod ] initial: [ nil ]
+	^ table 
+		at: aString 
+		update: [ :previous | previous copyWithout: aMethod ] 
+		initial: [ nil ]
 ]
 
 { #category : #updating }
