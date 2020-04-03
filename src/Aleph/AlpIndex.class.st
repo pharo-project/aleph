@@ -78,6 +78,11 @@ AlpIndex >> referencesTo: aString [
 	self subclassResponsibility
 ]
 
+{ #category : #resetting }
+AlpIndex >> shutdown [
+	self subclassResponsibility
+]
+
 { #category : #accessing }
 AlpIndex >> statistics: aDictionary [
 

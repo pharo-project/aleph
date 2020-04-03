@@ -61,6 +61,7 @@ AlpIndexManager class >> indexWorkerName [
 { #category : #testing }
 AlpIndexManager class >> isActive [
 
+	Current ifNil: [ ^ false ].
 	^ self current isActive
 ]
 
@@ -263,6 +264,9 @@ AlpIndexManager >> rebuildAll [
 AlpIndexManager >> shutDown [
  
 	self unsubscribeFromSystemAnnouncer.
+	indexes ifNotNil: [
+		indexes values do: [ :anIndex | anIndex shutdown ].
+		indexes := nil. ].
 	worker stop
 ]
 
@@ -271,7 +275,7 @@ AlpIndexManager >> subscribeToSystemAnnouncer [
 
 	self unsubscribeFromSystemAnnouncer.
 
-	SystemAnnouncer uniqueInstance weak
+	SystemAnnouncer uniqueInstance
 		when: ClassRemoved send: #classRemoved: to: self;
 		when: ClassAdded send: #classAdded: to: self;
 		when: ClassRenamed send: #classRenamed: to: self;

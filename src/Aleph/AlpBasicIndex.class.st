@@ -82,3 +82,9 @@ AlpBasicIndex >> referencesTo: aString [
 	
 	^ table at: aString ifAbsent: #()
 ]
+
+{ #category : #resetting }
+AlpBasicIndex >> shutdown [
+	
+	table := nil.
+]

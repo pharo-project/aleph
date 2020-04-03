@@ -172,6 +172,14 @@ AlpTrieIndex >> removeEntry: aString [
 				initial: [ nil ] ]
 ]
 
+{ #category : #resetting }
+AlpTrieIndex >> shutdown [
+	beginsWithTrie := nil.
+	initialTable := nil.
+	substringTrie := nil.
+	initialSubstringTable := nil.
+]
+
 { #category : #initialization }
 AlpTrieIndex >> startSize [
 
