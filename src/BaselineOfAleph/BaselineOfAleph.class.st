@@ -24,5 +24,5 @@ BaselineOfAleph >> taskit: spec [
 
 	spec 
 		baseline: 'TaskIt' 
-		with: [ spec repository: 'github://sbragagnolo/taskit' ]
+		with: [ spec repository: 'github://pharo-contributions/taskit' ]
 ]
