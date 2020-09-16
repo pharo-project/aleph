@@ -6,5 +6,5 @@ ClyClassReferencesQuery >> buildResult: aQueryResult [
 
 	vars := variableQuery execute items.
 	navigation := scope asSystemNavigation.
-	aQueryResult fillWith: (vars collect: [ :each | navigation allReferencesTo: each ]) flattened
+	aQueryResult fillWith: (vars flatCollect: [ :each | navigation allReferencesTo: each ]) 
 ]
