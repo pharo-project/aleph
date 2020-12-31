@@ -13,3 +13,13 @@ AlpMockOriginal >> method1 [
 		(1 + 1) printString, 
 		Object name
 ]
+
+{ #category : #templates }
+AlpMockOriginal >> method2WithBlock [
+	<aPragma>
+	<otherPragma: 42>
+	[ Class printString ] value.
+	^ self className, 
+		(1 + 1) printString, 
+		Object name
+]

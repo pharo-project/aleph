@@ -31,7 +31,7 @@ AlpReferencesIndex >> methodRemoved: aMethod [
 { #category : #private }
 AlpReferencesIndex >> referencesOf: aMethod do: aBlock [
 
-	(aMethod literals 
+	(aMethod literalsEvenTheOnesInTheInnerBlocks 
 		select: [ :each | each isVariableBinding ]) asSet
 		do: [ :each | aBlock value: each key ]
 ]

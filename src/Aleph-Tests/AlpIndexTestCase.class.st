@@ -25,6 +25,12 @@ AlpIndexTestCase >> compiledMethod1Modified [
 	^ AlpMockModified >> #method1
 ]
 
+{ #category : #templates }
+AlpIndexTestCase >> compiledMethod2WithBlock [
+
+	^ AlpMockOriginal >> #method2WithBlock
+]
+
 { #category : #accessing }
 AlpIndexTestCase >> index [
 
