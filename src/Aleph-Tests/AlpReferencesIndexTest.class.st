@@ -21,6 +21,14 @@ AlpReferencesIndexTest >> testIndexMethod [
 ]
 
 { #category : #tests }
+AlpReferencesIndexTest >> testIndexMethodWithBlock [
+
+	self index methodAdded: self compiledMethod2WithBlock.
+
+	self assert: (self index referencesTo: #Class) size equals: 1
+]
+
+{ #category : #tests }
 AlpReferencesIndexTest >> testMethodAdded [
 	"Self as indexMethod"
 

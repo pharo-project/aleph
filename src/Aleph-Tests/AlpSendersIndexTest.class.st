@@ -27,6 +27,15 @@ AlpSendersIndexTest >> testIndexMethod [
 ]
 
 { #category : #tests }
+AlpSendersIndexTest >> testIndexMethodWithBlock [
+	
+	self index methodAdded: self compiledMethod2WithBlock.
+	
+	self assert: (self index referencesTo: #printString) size equals: 1.
+
+]
+
+{ #category : #tests }
 AlpSendersIndexTest >> testMethodAdded [
 	"Same as index method"
 

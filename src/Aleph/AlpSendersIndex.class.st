@@ -37,7 +37,7 @@ AlpSendersIndex >> sendersOf: aMethod do: aBlock [
 	| senders |
 	senders := Set new.
 
-	aMethod literals do: [ :each | each isSymbol ifTrue: [ senders add: each ] ].
+	aMethod literalsEvenTheOnesInTheInnerBlocks do: [ :each | each isSymbol ifTrue: [ senders add: each ] ].
 	aMethod specialLiterals do: [ :each | senders add: each].
 	aMethod pragmas do: [ :each | senders add: each selector ].
 	
