@@ -30,8 +30,7 @@ Class {
 AlpIndexManager class >> activate [
 	<script>
 
-	self current active: true.
-
+	self current start.
 ]
 
 { #category : #'instance creation' }
@@ -43,7 +42,8 @@ AlpIndexManager class >> current [
 { #category : #accessing }
 AlpIndexManager class >> deactivate [
 
-	self current active: false
+	self current shutDown
+	
 ]
 
 { #category : #accessing }
@@ -191,11 +191,7 @@ AlpIndexManager >> initialize [
 
 	super initialize.
 	self active: false.
-	worker := TKTWorker new
-		name: self class indexWorkerName;
-		priority: self class indexPriority;
-		start.
-	self subscribeToSystemAnnouncer
+
 ]
 
 { #category : #testing }
@@ -262,12 +258,34 @@ AlpIndexManager >> rebuildAll [
 
 { #category : #'system startup' }
 AlpIndexManager >> shutDown [
- 
+
+	active ifFalse:[^self].
+
+	active := false.
+	 
 	self unsubscribeFromSystemAnnouncer.
 	indexes ifNotNil: [
 		indexes values do: [ :anIndex | anIndex shutdown ].
 		indexes := nil. ].
-	worker stop
+	worker stop.
+
+]
+
+{ #category : #private }
+AlpIndexManager >> start [ 
+
+	active ifTrue: [ ^ self ].
+
+	worker := TKTWorker new
+		name: self class indexWorkerName;
+		priority: self class indexPriority;
+		start.
+	self subscribeToSystemAnnouncer.
+
+	GCConfiguration forLargeObjectAllocation
+		activeDuring: [ self rebuildAll ].
+		
+	active := true
 ]
 
 { #category : #initialization }

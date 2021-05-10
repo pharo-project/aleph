@@ -97,18 +97,18 @@ AlpTrieIndex >> endRebuild [
 	initialSubstringTable := nil.
 ]
 
+{ #category : #updating }
+AlpTrieIndex >> initialTableSize [
+
+	^ self subclassResponsibility
+]
+
 { #category : #initialization }
 AlpTrieIndex >> initialize [
 
 	super initialize.
 	beginsWithTrie := CTOptimizedTrie new.
 	substringTrie := CTOptimizedTrie new
-]
-
-{ #category : #updating }
-AlpTrieIndex >> initialTableSize [
-
-	^ self subclassResponsibility
 ]
 
 { #category : #testing }
