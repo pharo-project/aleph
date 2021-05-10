@@ -31,6 +31,18 @@ AlpIndexTestCase >> compiledMethod2WithBlock [
 	^ AlpMockOriginal >> #method2WithBlock
 ]
 
+{ #category : #templates }
+AlpIndexTestCase >> compiledMethodAccessingInstanceVariable [
+
+	^ AlpMockOriginal >> #accessingMethod
+]
+
+{ #category : #templates }
+AlpIndexTestCase >> compiledMethodWrittingInstanceVariable [
+
+	^ AlpMockOriginal >> #modifyingMethod
+]
+
 { #category : #accessing }
 AlpIndexTestCase >> index [
 

@@ -33,5 +33,9 @@ AlpReferencesIndex >> referencesOf: aMethod do: aBlock [
 
 	(aMethod literalsEvenTheOnesInTheInnerBlocks 
 		select: [ :each | each isVariableBinding ]) asSet
-		do: [ :each | aBlock value: each key ]
+		do: [ :each | aBlock value: each key ].
+		
+	(aMethod instanceVariableWriteNodes , aMethod instanceVariableReadNodes) 
+		collect: [ :e | e name ] 
+		thenDo: [ :e | aBlock value: e ]
 ]

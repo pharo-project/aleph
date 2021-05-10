@@ -6,7 +6,7 @@ ClyVariableReadersQuery >> buildResult: aQueryResult [
 
 	vars := variableQuery execute items.
 	navigation := scope asSystemNavigation.
-	aQueryResult fillWith: (((vars 
-		collect: [ :each | navigation allReferencesTo: each ]) flattened) 
-		select: [ :each | vars anySatisfy: [ :eachVar | each readsRef: eachVar ] ])
+	aQueryResult fillWith: ((vars 
+		flatCollect: [ :each | navigation allReferencesTo: each ]) 
+		select: [ :each | self doesMethod: each useAnyOf: vars ])
 ]

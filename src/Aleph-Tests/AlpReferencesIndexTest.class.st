@@ -11,6 +11,22 @@ AlpReferencesIndexTest >> indexClass [
 ]
 
 { #category : #tests }
+AlpReferencesIndexTest >> testFindingReaders [
+
+	self index methodAdded: self compiledMethodAccessingInstanceVariable.
+
+	self assert: (self index referencesTo: #anInstanceVariable) size equals: 1
+]
+
+{ #category : #tests }
+AlpReferencesIndexTest >> testFindingWritters [
+
+	self index methodAdded: self compiledMethodWrittingInstanceVariable.
+
+	self assert: (self index referencesTo: #anInstanceVariable) size equals: 1
+]
+
+{ #category : #tests }
 AlpReferencesIndexTest >> testIndexMethod [
 	
 	self index methodAdded: self compiledMethod1.

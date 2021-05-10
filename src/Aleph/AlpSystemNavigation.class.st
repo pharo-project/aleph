@@ -16,6 +16,9 @@ AlpSystemNavigation >> allImplementorsOf: aLiteral [
 { #category : #query }
 AlpSystemNavigation >> allReferencesTo: aLiteral [
 
+	(aLiteral isKindOf: ClyVariable)
+		ifTrue: [ ^ self manager findReferencesTo: aLiteral actualVariable name ].
+
 	^ self applyScope: (aLiteral isVariableBinding
 		ifTrue:[ self manager findReferencesTo: aLiteral key ]
 		ifFalse: [ self manager findSendersOf: aLiteral ])
