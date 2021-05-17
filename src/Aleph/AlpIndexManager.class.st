@@ -41,6 +41,7 @@ AlpIndexManager class >> current [
 
 { #category : #accessing }
 AlpIndexManager class >> deactivate [
+	<script>
 
 	self current shutDown
 	
@@ -282,8 +283,7 @@ AlpIndexManager >> start [
 		start.
 	self subscribeToSystemAnnouncer.
 
-	GCConfiguration forLargeObjectAllocation
-		activeDuring: [ self rebuildAll ].
+	self rebuildAll.
 		
 	active := true
 ]
