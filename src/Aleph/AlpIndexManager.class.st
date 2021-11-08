@@ -156,6 +156,12 @@ AlpIndexManager >> ensureWorkerRunning [
 ]
 
 { #category : #query }
+AlpIndexManager >> findClassesStartingWith: aPrefix do: aBlock [
+
+	^(self indexAt: #classes) referencesBeginningWith: aPrefix do: aBlock
+]
+
+{ #category : #query }
 AlpIndexManager >> findImplementorsOf: aLiteral [
 
 	^ (self indexAt: #implementors) referencesTo: aLiteral

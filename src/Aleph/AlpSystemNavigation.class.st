@@ -8,6 +8,14 @@ Class {
 }
 
 { #category : #query }
+AlpSystemNavigation >> allClassesStartingWith: aString do: aBlock [
+
+	^ self manager findClassesStartingWith: aString do: [ :results |
+		"Somehow this gives a list of lists..."
+		 aBlock value: results first name ]
+]
+
+{ #category : #query }
 AlpSystemNavigation >> allImplementorsOf: aLiteral [
 
 	^ self applyScope: (self manager findImplementorsOf: aLiteral)
