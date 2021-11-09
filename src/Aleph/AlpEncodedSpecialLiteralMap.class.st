@@ -12,7 +12,7 @@ Class {
 		'literals',
 		'initialBytecode'
 	],
-	#category : #Aleph
+	#category : #'Aleph-Core'
 }
 
 { #category : #accessing }

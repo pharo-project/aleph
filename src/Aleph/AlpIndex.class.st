@@ -17,7 +17,7 @@ Class {
 	#instVars : [
 		'statistics'
 	],
-	#category : #Aleph
+	#category : #'Aleph-Indexes'
 }
 
 { #category : #updating }
@@ -81,6 +81,12 @@ AlpIndex >> referencesTo: aString [
 { #category : #resetting }
 AlpIndex >> shutdown [
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+AlpIndex >> statistics [
+
+	^ statistics
 ]
 
 { #category : #accessing }

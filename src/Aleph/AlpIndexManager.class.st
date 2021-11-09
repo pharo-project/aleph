@@ -23,7 +23,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : #Aleph
+	#category : #'Aleph-Core'
 }
 
 { #category : #accessing }
@@ -242,10 +242,12 @@ AlpIndexManager >> navigation: aNavigation [
 { #category : #initialization }
 AlpIndexManager >> newDefaultIndexes [
 
-	^ { #implementors -> AlpImplementorsIndex new.
+	^ { "#implementors -> AlpImplementorsIndex new."
+		 #implementors -> AlpImplementorsIndexWithTable new.
 		 #references -> AlpReferencesIndex new.
-		 #classes -> AlpClassesIndex new.
-		 #senders -> AlpSendersIndex new. } asDictionary 
+		 "#classes -> AlpClassesIndex new."
+		 #senders -> AlpSendersIndex new.
+		 #classes -> AlpClassesIndexWithTable new } asDictionary 
 ]
 
 { #category : #building }

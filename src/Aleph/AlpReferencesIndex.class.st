@@ -5,7 +5,7 @@ I index the name of the global accessible variables and store them in a table wi
 Class {
 	#name : #AlpReferencesIndex,
 	#superclass : #AlpBasicIndex,
-	#category : #Aleph
+	#category : #'Aleph-Indexes'
 }
 
 { #category : #accessing }

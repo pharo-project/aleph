@@ -21,7 +21,7 @@ Class {
 		'beginsWithTrie',
 		'substringTrie'
 	],
-	#category : #Aleph
+	#category : #'Aleph-Indexes'
 }
 
 { #category : #updating }

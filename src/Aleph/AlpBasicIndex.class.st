@@ -13,7 +13,7 @@ Class {
 		'table',
 		'duringRebuild'
 	],
-	#category : #Aleph
+	#category : #'Aleph-Indexes'
 }
 
 { #category : #accessing }

@@ -6,7 +6,7 @@ I can handle the implicit literals encoded in the bytecode by using #AlpEncodedS
 Class {
 	#name : #AlpSendersIndex,
 	#superclass : #AlpBasicIndex,
-	#category : #Aleph
+	#category : #'Aleph-Indexes'
 }
 
 { #category : #accessing }

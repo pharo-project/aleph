@@ -4,7 +4,7 @@ I am a SystemNavigation implementation that uses the indexes in Aleph for all th
 Class {
 	#name : #AlpSystemNavigation,
 	#superclass : #SystemNavigation,
-	#category : #Aleph
+	#category : #'Aleph-Core'
 }
 
 { #category : #query }

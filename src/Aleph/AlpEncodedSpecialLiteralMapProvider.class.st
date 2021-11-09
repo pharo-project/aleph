@@ -13,7 +13,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #Aleph
+	#category : #'Aleph-Core'
 }
 
 { #category : #accessing }
