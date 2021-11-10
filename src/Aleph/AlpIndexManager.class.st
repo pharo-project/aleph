@@ -158,7 +158,7 @@ AlpIndexManager >> ensureWorkerRunning [
 { #category : #query }
 AlpIndexManager >> findClassesStartingWith: aPrefix do: aBlock [
 
-	^(self indexAt: #classes) referencesBeginningWith: aPrefix do: aBlock
+	^(self indexAt: #classes) withAllValuesBeginningWith: aPrefix do: aBlock
 ]
 
 { #category : #query }

@@ -8,11 +8,11 @@ Class {
 }
 
 { #category : #query }
-AlpSystemNavigation >> allClassesStartingWith: aString do: aBlock [
+AlpSystemNavigation >> allClassNamesStartingWith: aString do: aBlock [
 
-	^ self manager findClassesStartingWith: aString do: [ :results |
+	^ self manager findClassesStartingWith: aString do: [ :aClass |
 		"Somehow this gives a list of lists..."
-		 aBlock value: results first name ]
+		 aBlock value: aClass name ]
 ]
 
 { #category : #query }
