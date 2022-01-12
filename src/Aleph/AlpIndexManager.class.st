@@ -174,6 +174,12 @@ AlpIndexManager >> findReferencesTo: aLiteral [
 ]
 
 { #category : #query }
+AlpIndexManager >> findSelectorsStartingWith: aPrefix do: aBlock [
+
+	^(self indexAt: #implementors) withAllValuesBeginningWith: aPrefix do: aBlock
+]
+
+{ #category : #query }
 AlpIndexManager >> findSendersOf: aLiteral [
 
 	^ (self indexAt: #senders) referencesTo: aLiteral

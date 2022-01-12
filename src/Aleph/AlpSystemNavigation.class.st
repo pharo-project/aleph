@@ -33,6 +33,13 @@ AlpSystemNavigation >> allReferencesTo: aLiteral [
 ]
 
 { #category : #query }
+AlpSystemNavigation >> allSelectorsStartingWith: aString do: aBlock [
+
+	^ self manager findSelectorsStartingWith: aString do: [ :aMethod |
+		 aBlock value: aMethod selector]
+]
+
+{ #category : #query }
 AlpSystemNavigation >> allSendersOf: aLiteral [
 
 	^ self applyScope: (self manager findSendersOf: aLiteral)
