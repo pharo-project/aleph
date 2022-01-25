@@ -175,8 +175,8 @@ AlpIndexManager >> findReferencesTo: aLiteral [
 
 { #category : #query }
 AlpIndexManager >> findSelectorsStartingWith: aPrefix do: aBlock [
-
-	^(self indexAt: #implementors) withAllValuesBeginningWith: aPrefix do: aBlock
+	^(self indexAt: #implementors) withAllSelectorsBeginningWith: aPrefix
+		do: aBlock
 ]
 
 { #category : #query }

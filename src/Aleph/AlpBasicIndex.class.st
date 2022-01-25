@@ -63,18 +63,18 @@ AlpBasicIndex >> endRebuild [
 	table associationsDo: [ :assoc | assoc value: (assoc value asArray) ]
 ]
 
-{ #category : #accessing }
-AlpBasicIndex >> initialTableSize [
-
-	^ self subclassResponsibility 
-]
-
 { #category : #initialization }
 AlpBasicIndex >> initialize [
 
 	super initialize.
 	table := IdentityDictionary new: 10000.
 	duringRebuild := false.
+]
+
+{ #category : #accessing }
+AlpBasicIndex >> initialTableSize [
+
+	^ self subclassResponsibility 
 ]
 
 { #category : #accessing }

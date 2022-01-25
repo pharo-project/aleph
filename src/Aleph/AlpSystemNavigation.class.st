@@ -34,9 +34,7 @@ AlpSystemNavigation >> allReferencesTo: aLiteral [
 
 { #category : #query }
 AlpSystemNavigation >> allSelectorsStartingWith: aString do: aBlock [
-
-	^ self manager findSelectorsStartingWith: aString do: [ :aMethod |
-		 aBlock value: aMethod selector]
+	^self manager findSelectorsStartingWith: aString do: aBlock
 ]
 
 { #category : #query }
