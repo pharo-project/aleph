@@ -50,12 +50,6 @@ AlpTableBasedIndex >> entries [
 	^ entries
 ]
 
-{ #category : #updating }
-AlpTableBasedIndex >> initialTableSize [ 
-
-	self subclassResponsibility 
-]
-
 { #category : #'instance creation' }
 AlpTableBasedIndex >> initialize [
 	
@@ -63,6 +57,12 @@ AlpTableBasedIndex >> initialize [
 	entries := SortedCollection new.
 	substringStrategy := AlpDummyTableBasedSubstringStrategy new
 
+]
+
+{ #category : #updating }
+AlpTableBasedIndex >> initialTableSize [ 
+
+	self subclassResponsibility 
 ]
 
 { #category : #querying }
@@ -118,6 +118,20 @@ AlpTableBasedIndex >> resolveName: aString do: aBlock [
 AlpTableBasedIndex >> shutdown [
 	
 	entries := nil.
+]
+
+{ #category : #query }
+AlpTableBasedIndex >> withAllSelectorsBeginningWith: aString do: aBlockClosure [
+	| first found |
+	first := entries binarySearchMinimalIndexOf: aString.
+	first isZero ifTrue: [^self].
+	first to: entries size
+		do: 
+			[:i |
+			found := entries at: i.
+			(found beginsWith: aString)
+				ifTrue: [aBlockClosure value: found]
+				ifFalse: [^self]]
 ]
 
 { #category : #querying }
