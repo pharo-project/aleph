@@ -50,6 +50,12 @@ AlpTableBasedIndex >> entries [
 	^ entries
 ]
 
+{ #category : #updating }
+AlpTableBasedIndex >> initialTableSize [ 
+
+	self subclassResponsibility 
+]
+
 { #category : #'instance creation' }
 AlpTableBasedIndex >> initialize [
 	
@@ -57,12 +63,6 @@ AlpTableBasedIndex >> initialize [
 	entries := SortedCollection new.
 	substringStrategy := AlpDummyTableBasedSubstringStrategy new
 
-]
-
-{ #category : #updating }
-AlpTableBasedIndex >> initialTableSize [ 
-
-	self subclassResponsibility 
 ]
 
 { #category : #querying }

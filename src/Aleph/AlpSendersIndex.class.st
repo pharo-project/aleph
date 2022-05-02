@@ -33,9 +33,11 @@ AlpSendersIndex >> methodRemoved: aMethod [
 { #category : #private }
 AlpSendersIndex >> sendersOf: aMethod do: aBlock [
 
-	"I use a Set to guarantee that the repeted literals are only stored once"
+	"I use a set to guarantee that the repeted literals are only stored once.
+	
+	I use an IdentitySet instead of a Set to gain speed, as we can compare symbols by identity. "
 	| senders |
-	senders := Set new.
+	senders := IdentitySet new.
 
 	aMethod literalsEvenTheOnesInTheInnerBlocks do: [ :each | each isSymbol ifTrue: [ senders add: each ] ].
 	aMethod specialLiterals do: [ :each | senders add: each].
