@@ -40,7 +40,7 @@ AlpImplementorsIndexWithTable >> beginRebuild [
 
 	super beginRebuild.
 
-	selectorsMap := Dictionary new: (self statistics at: #numberOfSymbols) 
+	selectorsMap := IdentityDictionary new: (self statistics at: #numberOfSymbols) 
 ]
 
 { #category : #accessing }
@@ -64,7 +64,7 @@ AlpImplementorsIndexWithTable >> endRebuild [
 AlpImplementorsIndexWithTable >> initialize [
 	
 	super initialize.
-	selectorsMap := Dictionary new
+	selectorsMap := IdentityDictionary new
 	
 ]
 
