@@ -43,6 +43,23 @@ AlpImplementorsIndexWithTable >> beginRebuild [
 	selectorsMap := Dictionary new: (self statistics at: #numberOfSymbols) 
 ]
 
+{ #category : #accessing }
+AlpImplementorsIndexWithTable >> defaultEntitiesForRebuild [
+	^ OrderedCollection new: self initialTableSize
+]
+
+{ #category : #updating }
+AlpImplementorsIndexWithTable >> endRebuild [
+	| temporaryEntries |
+	super endRebuild.
+	
+	temporaryEntries := SortedCollection new: self initialTableSize.
+	entries do: [ :each | temporaryEntries addLast: each ].
+	temporaryEntries reSort.
+	
+	entries := temporaryEntries
+]
+
 { #category : #initialization }
 AlpImplementorsIndexWithTable >> initialize [
 	

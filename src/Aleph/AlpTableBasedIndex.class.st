@@ -35,7 +35,7 @@ AlpTableBasedIndex >> beginRebuild [
 
 	super beginRebuild.
 
-	entries := SortedCollection new: self initialTableSize.
+	entries := self defaultEntitiesForRebuild.
 	substringStrategy beginRebuildFor: self
 ]
 
@@ -43,6 +43,11 @@ AlpTableBasedIndex >> beginRebuild [
 AlpTableBasedIndex >> clear [
 
 	self initialize
+]
+
+{ #category : #accessing }
+AlpTableBasedIndex >> defaultEntitiesForRebuild [
+	^ SortedCollection new: self initialTableSize
 ]
 
 { #category : #accessing }
