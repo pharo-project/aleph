@@ -5,7 +5,7 @@ CompiledMethod >> specialLiterals [
 	| results specialLiteralMap |
 
 	specialLiteralMap := self encoderClass encodedSpecialLiteralMap.
-	results := Set new.
+	results := IdentitySet new.
 	(InstructionStream on: self) scanFor: [ :instr | 
 		specialLiteralMap 
 			at: instr 

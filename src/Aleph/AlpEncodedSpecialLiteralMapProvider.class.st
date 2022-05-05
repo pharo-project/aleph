@@ -55,13 +55,13 @@ AlpEncodedSpecialLiteralMapProvider >> createMapFor: anEncoderClass [
 AlpEncodedSpecialLiteralMapProvider >> initialize [
 
 	super initialize.
-	maps := SmallDictionary new
+	maps := IdentityDictionary new
 ]
 
 { #category : #accessing }
 AlpEncodedSpecialLiteralMapProvider >> mapAt: anEncoderClass [
 
 	^ maps 
-		at: anEncoderClass 
+		at: anEncoderClass name
 		ifAbsentPut: [ self createMapFor: anEncoderClass ]
 ]

@@ -35,7 +35,7 @@ AlpTableBasedIndex >> beginRebuild [
 
 	super beginRebuild.
 
-	entries := SortedCollection new: self initialTableSize.
+	entries := self defaultEntitiesForRebuild.
 	substringStrategy beginRebuildFor: self
 ]
 
@@ -46,8 +46,19 @@ AlpTableBasedIndex >> clear [
 ]
 
 { #category : #accessing }
+AlpTableBasedIndex >> defaultEntitiesForRebuild [
+	^ SortedCollection new: self initialTableSize
+]
+
+{ #category : #accessing }
 AlpTableBasedIndex >> entries [
 	^ entries
+]
+
+{ #category : #updating }
+AlpTableBasedIndex >> initialTableSize [ 
+
+	self subclassResponsibility 
 ]
 
 { #category : #'instance creation' }
@@ -57,12 +68,6 @@ AlpTableBasedIndex >> initialize [
 	entries := SortedCollection new.
 	substringStrategy := AlpDummyTableBasedSubstringStrategy new
 
-]
-
-{ #category : #updating }
-AlpTableBasedIndex >> initialTableSize [ 
-
-	self subclassResponsibility 
 ]
 
 { #category : #querying }
