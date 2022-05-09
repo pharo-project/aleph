@@ -2,6 +2,15 @@
 Aleph is an index system for Pharo.
 It implements an interface for all the users of system navigation including Calypso.
 
+## Install
+
+```
+Metacello new 
+	repository: 'github://pharo-project/Aleph/src';
+	baseline: 'Aleph';
+	load.
+ ```
+
 ## The Index Manager
 
 It has an index manager, charged with the task of concentrate all system indexes and accessors to it. 
