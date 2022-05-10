@@ -50,14 +50,9 @@ AlpImplementorsIndexWithTable >> defaultEntitiesForRebuild [
 
 { #category : #updating }
 AlpImplementorsIndexWithTable >> endRebuild [
-	| temporaryEntries |
 	super endRebuild.
 	
-	temporaryEntries := SortedCollection new: self initialTableSize.
-	entries do: [ :each | temporaryEntries addLast: each ].
-	temporaryEntries reSort.
-	
-	entries := temporaryEntries
+	entries := entries asSortedCollection.
 ]
 
 { #category : #initialization }
