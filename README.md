@@ -2,6 +2,8 @@
 Aleph is an index system for Pharo.
 It implements an interface for all the users of system navigation including Calypso.
 
+[![CI matrix](https://github.com//ApptiveGrid/MoniBase/actions/workflows/build.yml/badge.svg)](https://github.com//ApptiveGrid/MoniBase/actions/workflows/build.yml)
+
 ## Install
 
 ```
