@@ -189,8 +189,11 @@ AlpIndexManager >> findSendersOf: aLiteral [
 AlpIndexManager >> generateStatistics [
 
 	^ statistics := Dictionary newFromPairs: { 
-		#numberOfClasses. SystemNavigation default environment classNames size.
-	 	#numberOfSymbols. Symbol numberOfSymbols } 
+			                #numberOfClasses.
+			                SystemNavigation default environment classNames
+				                size.
+			                #numberOfSymbols.
+			                Symbol allSymbols size }
 ]
 
 { #category : #private }
